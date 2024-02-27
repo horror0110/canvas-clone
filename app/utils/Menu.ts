@@ -214,6 +214,22 @@ const education = [
  
 ]
 
+const garal = [
+    {
+        title: "Сэхээтэн"
+    },
+    {
+        title: "Малчин"
+    },
+    {
+        title: "Ажилчин"
+    },
+    {
+        title: "Бусад"
+    },
+ 
+]
+
 const award = [
     {
         title: "Доктор"
@@ -225,4 +241,4 @@ const award = [
         title: "Бакалавр"
     },
 ]
-export  {menu , aimag , duureg , married , award , education , blood , country , para , driveLicence , tsereg , tetgever , vndes};
+export  {menu , aimag , duureg , married , award , education , blood , country , para , driveLicence , tsereg , tetgever , vndes , garal};

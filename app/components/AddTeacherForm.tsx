@@ -1,6 +1,21 @@
 "use client";
 import { InputText } from "primereact/inputtext";
-import { menu, aimag, duureg } from "../utils/Menu";
+import {
+  menu,
+  aimag,
+  duureg,
+  country,
+  vndes,
+  garal,
+  education,
+  award,
+  married,
+  tsereg,
+  tetgever,
+  blood,
+  driveLicence,
+  para,
+} from "../utils/Menu";
 import Link from "next/link";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
@@ -11,8 +26,6 @@ const AddTeacherForm = () => {
   const [selectedLivingCity, setSelectedLivingCity] = useState(null);
   const [selectedLivingDistrict, setSelectedLivingDistrict] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedBornCity, setSelectedBornCity] = useState(null);
-  const [selectedBornDistrict, setSelectedBornDistrict] = useState(null);
   const [selectedVndes, setSelectedVndes] = useState(null);
   const [selectedGaral, setSelectedGaral] = useState(null);
   const [selectedEducation, setSelectedEducation] = useState(null);
@@ -64,6 +77,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Төрсөн огноо</label>
               <InputText
+                type="date"
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -202,26 +216,39 @@ const AddTeacherForm = () => {
           <div className="grid grid-cols-2 gap-20">
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Улс</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+
+              <Dropdown
+                value={selectedCountry}
+                onChange={(e) => setSelectedCountry(e.value)}
+                options={country}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Яс үндэс</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+              <Dropdown
+                value={selectedVndes}
+                onChange={(e) => setSelectedVndes(e.value)}
+                options={vndes}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Нийгмийн гарал</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+              <Dropdown
+                value={selectedGaral}
+                onChange={(e) => setSelectedGaral(e.value)}
+                options={garal}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -237,10 +264,14 @@ const AddTeacherForm = () => {
           <div className="grid grid-cols-2 gap-20">
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Боловсрол</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+              <Dropdown
+                value={selectedEducation}
+                onChange={(e) => setSelectedEducation(e.value)}
+                options={education}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -253,10 +284,14 @@ const AddTeacherForm = () => {
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Эрдмийн цол зэрэг</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+              <Dropdown
+                value={selectedAward}
+                onChange={(e) => setSelectedAward(e.value)}
+                options={award}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
           </div>
@@ -273,26 +308,38 @@ const AddTeacherForm = () => {
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Гэрлэлтийн байдал</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+              <Dropdown
+                value={selectedMarried}
+                onChange={(e) => setSelectedMarried(e.value)}
+                options={married}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Цэргийн алба хаасан эсэх</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+              <Dropdown
+                value={selectedTsereg}
+                onChange={(e) => setSelectedTsereg(e.value)}
+                options={tsereg}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Тэтгэвэр тогтоосон эсэх</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+              <Dropdown
+                value={selectedTetgever}
+                onChange={(e) => setSelectedTetgever(e.value)}
+                options={tetgever}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -305,18 +352,26 @@ const AddTeacherForm = () => {
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Цусны бүлэг</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+              <Dropdown
+                value={selectedBlood}
+                onChange={(e) => setSelectedBlood(e.value)}
+                options={blood}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Жолооны ангилал</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+              <Dropdown
+                value={selectedDrive}
+                onChange={(e) => setSelectedDrive(e.value)}
+                options={driveLicence}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -329,10 +384,14 @@ const AddTeacherForm = () => {
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Хөгжлийн бэрхшээлтэй эсэх</label>
-              <InputText
-                id="username"
-                aria-describedby="username-help"
-                className="border border-gray-500 "
+              <Dropdown
+                value={selectedPara}
+                onChange={(e) => setSelectedPara(e.value)}
+                options={para}
+                optionLabel="title"
+                editable
+                placeholder="Сонгох"
+                className="w-full md:w-14rem"
               />
             </div>
           </div>
