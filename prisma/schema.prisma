@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Teacher {
+  id                   String   @id @default(cuid()) @map("_id")
+  name                 String
+  parentsName          String
+  registerNumber       String
+  date                 DateTime
+  familyName           String
+  sex                  String
+  country              String
+  city                 String
+  district             String
+  address              String
+  liveCity             String
+  liveDistrict         String
+  liveAddress          String
+  importantPhoneNumber Int
+  email                String
+  addressEmail         String
+  bornCountry          String
+  vndes                String
+  bornType             String
+  bornAddress          String
+  education            String
+  profession           String
+  award                String
+  passportNumber       String
+  married              String
+  tsereg               String
+  tetgever             String
+  description          String
+  blood                Int
+  drive                String
+  driveNumber          String
+  para                 String
+}

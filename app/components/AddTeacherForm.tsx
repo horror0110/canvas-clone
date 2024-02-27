@@ -20,6 +20,10 @@ import Link from "next/link";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
+import { UploadButton } from "./uploadThing";
+import { LuLoader2 } from "react-icons/lu";
+import { IoMdClose } from "react-icons/io";
+import Image from "next/image";
 const AddTeacherForm = () => {
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
@@ -36,6 +40,37 @@ const AddTeacherForm = () => {
   const [selectedDrive, setSelectedDrive] = useState(null);
   const [selectedPara, setSelectedPara] = useState(null);
   const [selectedTetgever, setSelectedTetgever] = useState(null);
+  const [image, setImage] = useState("");
+  const [imageIsDeleting, setImageIsDeleting] = useState(false);
+
+  const handleImageDelete = (image: string) => {
+    setImageIsDeleting(true);
+
+    const imageKey = image.substring(image.lastIndexOf("/") + 1);
+
+    const data = { imageKey };
+
+    fetch("/api/uploadthing/delete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res: any) => res.json())
+      .then((data) => {
+        if (data.success) {
+           setImage("")
+          alert("File upload successful!");
+        }
+      })
+      .catch(() => {
+        alert("when file upload error");
+      })
+      .finally(() => {
+        setImageIsDeleting(false);
+      });
+  };
   return (
     <>
       <div className="flex gap-10">
@@ -48,6 +83,44 @@ const AddTeacherForm = () => {
         </div>
 
         <div className="w-full gap-20">
+            <h1 className="text-center font-bold text-lg">Багшийн зураг оруулах</h1>
+          <div className="flex flex-col mx-auto max-w-[400px] p-12 border-2 border-dashed border-primary/50 rounded mt-4">
+            {image ? (
+              <div className="relative max-w-[400px] min-w-[200px] max-h-[400px] min-h-[200px] mt-4">
+                <Image
+                  fill
+                  src={image}
+                  alt="profile image"
+                  className="object-contain"
+                />
+
+                <button
+                  onClick={() => handleImageDelete(image)}
+                  type="button"
+                  className="absolute right-[-12px]"
+                >
+                  {imageIsDeleting ? <LuLoader2 /> : <IoMdClose />}
+                </button>
+              </div>
+            ) : (
+              <>
+                <UploadButton
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res: any) => {
+                    setImage(res[0].url);
+
+                    console.log("Files: ", res);
+                    alert("Upload Completed");
+                  }}
+                  onUploadError={(error: Error) => {
+                    // Do something with the error.
+                    alert(`ERROR! ${error.message}`);
+                  }}
+                />
+              </>
+            )}
+          </div>
+
           <h1 className="font-bold text-lg mb-10">Үндсэн мэдээлэл</h1>
           <div className="grid grid-cols-2 gap-20">
             <div className="flex flex-col gap-2">
