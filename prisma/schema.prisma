@@ -16,9 +16,11 @@ datasource db {
 model Teacher {
   id                   String   @id @default(cuid()) @map("_id")
   name                 String
+  image                String
   parentsName          String
+  irgenshil            String
   registerNumber       String
-  date                 DateTime
+  date                 String
   familyName           String
   sex                  String
   country              String
@@ -28,7 +30,7 @@ model Teacher {
   liveCity             String
   liveDistrict         String
   liveAddress          String
-  importantPhoneNumber Int
+  importantPhoneNumber String
   email                String
   addressEmail         String
   bornCountry          String
@@ -43,7 +45,7 @@ model Teacher {
   tsereg               String
   tetgever             String
   description          String
-  blood                Int
+  blood                String
   drive                String
   driveNumber          String
   para                 String

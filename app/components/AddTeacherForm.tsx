@@ -19,29 +19,55 @@ import {
 import Link from "next/link";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-import { useState } from "react";
+import { use, useState } from "react";
 import { UploadButton } from "./uploadThing";
 import { LuLoader2 } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
 import Image from "next/image";
+
+
+type DropdownOption = {
+  title: string;
+  // Add other properties if needed
+};
+
+
+
 const AddTeacherForm = () => {
-  const [selectedCity, setSelectedCity] = useState(null);
-  const [selectedDistrict, setSelectedDistrict] = useState(null);
-  const [selectedLivingCity, setSelectedLivingCity] = useState(null);
-  const [selectedLivingDistrict, setSelectedLivingDistrict] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedVndes, setSelectedVndes] = useState(null);
-  const [selectedGaral, setSelectedGaral] = useState(null);
-  const [selectedEducation, setSelectedEducation] = useState(null);
-  const [selectedAward, setSelectedAward] = useState(null);
-  const [selectedBlood, setSelectedBlood] = useState(null);
-  const [selectedMarried, setSelectedMarried] = useState(null);
-  const [selectedTsereg, setSelectedTsereg] = useState(null);
-  const [selectedDrive, setSelectedDrive] = useState(null);
-  const [selectedPara, setSelectedPara] = useState(null);
-  const [selectedTetgever, setSelectedTetgever] = useState(null);
+  const [selectedCity, setSelectedCity] = useState<DropdownOption | null>(null);
+  const [selectedDistrict, setSelectedDistrict] = useState<DropdownOption | null>(null);
+  const [selectedLivingCity, setSelectedLivingCity] = useState<DropdownOption | null>(null);
+  const [selectedLivingDistrict, setSelectedLivingDistrict] = useState<DropdownOption | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<DropdownOption | null>(null);
+  const [selectedVndes, setSelectedVndes] = useState<DropdownOption | null>(null);
+  const [selectedGaral, setSelectedGaral] = useState<DropdownOption | null>(null);
+  const [selectedEducation, setSelectedEducation] = useState<DropdownOption | null>(null);
+  const [selectedAward, setSelectedAward] = useState<DropdownOption | null>(null);
+  const [selectedBlood, setSelectedBlood] = useState<DropdownOption | null>(null);
+  const [selectedMarried, setSelectedMarried] = useState<DropdownOption | null>(null);
+  const [selectedTsereg, setSelectedTsereg] = useState<DropdownOption | null>(null);
+  const [selectedDrive, setSelectedDrive] = useState<DropdownOption | null>(null);
+  const [selectedPara, setSelectedPara] = useState<DropdownOption | null>(null);
+  const [selectedTetgever, setSelectedTetgever] = useState<DropdownOption | null>(null);
   const [image, setImage] = useState("");
   const [imageIsDeleting, setImageIsDeleting] = useState(false);
+  const [parentsName, setParentsName] = useState("");
+  const [name, setName] = useState("");
+  const [registerNumber, setRegisterNumber] = useState("");
+  const [date, setDate] = useState("");
+  const [familyName, setFamilyName] = useState("");
+  const [sex, setSex] = useState("");
+  const [irgenshil, setIrgenshil] = useState("");
+  const [address, setAddress] = useState("");
+  const [liveAddress, setLiveAddress] = useState("");
+  const [importantPhoneNumber, setImportantPhoneNumber] = useState("");
+  const [addressEmail, setAddressEmail] = useState("");
+  const [email, setEmail] = useState("");
+  const [bornAddress, setBornAddress] = useState("");
+  const [profession, setProfession] = useState("");
+  const [passportNumber, setPassportNumber] = useState("");
+  const [description, setDescription] = useState("");
+  const [drive, setDrive] = useState("");
 
   const handleImageDelete = (image: string) => {
     setImageIsDeleting(true);
@@ -60,7 +86,7 @@ const AddTeacherForm = () => {
       .then((res: any) => res.json())
       .then((data) => {
         if (data.success) {
-           setImage("")
+          setImage("");
           alert("File upload successful!");
         }
       })
@@ -70,6 +96,63 @@ const AddTeacherForm = () => {
       .finally(() => {
         setImageIsDeleting(false);
       });
+  };
+
+  const handleSave = (e:any) => {
+    e.preventDefault();
+
+    console.log(selectedEducation)
+
+    const data = {
+      name: name,
+      image: image,
+      parentsName: parentsName,
+      registerNumber: registerNumber,
+      date: date,
+      familyName: familyName,
+      sex: sex,
+      country: selectedCountry?.title,
+      city: selectedCity?.title,
+      district: selectedDistrict?.title,
+      address: address,
+      liveCity: selectedLivingCity?.title,
+      liveDistrict: selectedLivingDistrict?.title,
+      liveAddress: liveAddress,
+      importantPhoneNumber: importantPhoneNumber,
+      email: email,
+      addressEmail: addressEmail,
+      bornCountry: bornAddress,
+      vndes: selectedVndes?.title,
+      bornType: selectedGaral?.title,
+      bornAddress: bornAddress,
+      education: selectedEducation?.title,
+      profession: profession,
+      award: selectedAward?.title,
+      passportNumber: passportNumber,
+      married: selectedMarried?.title,
+      tsereg: selectedTsereg?.title,
+      tetgever: selectedTetgever?.title,
+      description: description,
+      blood: selectedBlood?.title,
+      drive: drive,
+      driveNumber: selectedDrive?.title,
+      para: selectedPara?.title,
+      irgenshil: irgenshil
+    };
+
+    fetch("/api/teacher", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(data),
+    }).then(response=> response.json())
+    .then(data=> {
+      if(data){
+        alert("Amjilttai")
+      }
+      else {
+        alert("Aldaa garlaa")
+      }
+    }).catch(err=> console.log(err))
   };
   return (
     <>
@@ -83,7 +166,9 @@ const AddTeacherForm = () => {
         </div>
 
         <div className="w-full gap-20">
-            <h1 className="text-center font-bold text-lg">Багшийн зураг оруулах</h1>
+          <h1 className="text-center font-bold text-lg">
+            Багшийн зураг оруулах
+          </h1>
           <div className="flex flex-col mx-auto max-w-[400px] p-12 border-2 border-dashed border-primary/50 rounded mt-4">
             {image ? (
               <div className="relative max-w-[400px] min-w-[200px] max-h-[400px] min-h-[200px] mt-4">
@@ -126,6 +211,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Эцэг(эх)-ийн нэр</label>
               <InputText
+                onChange={(e) => setParentsName(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -134,6 +220,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Нэр</label>
               <InputText
+                onChange={(e) => setName(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -142,6 +229,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Регистрийн дугаар</label>
               <InputText
+                onChange={(e) => setRegisterNumber(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -150,6 +238,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Төрсөн огноо</label>
               <InputText
+                onChange={(e) => setDate(e.target.value)}
                 type="date"
                 id="username"
                 aria-describedby="username-help"
@@ -159,6 +248,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Ургийн овог</label>
               <InputText
+                onChange={(e) => setFamilyName(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -167,6 +257,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Хүйс</label>
               <InputText
+                onChange={(e) => setSex(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -176,6 +267,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Иргэншил</label>
               <InputText
+                onChange={(e) => setIrgenshil(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -215,6 +307,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Бүртгэлтэй хаяг</label>
               <InputText
+                onChange={(e) => setAddress(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -255,6 +348,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Гэрийн хаяг</label>
               <InputText
+                onChange={(e) => setLiveAddress(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -263,6 +357,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Яаралтай үед холбоо барих</label>
               <InputText
+                onChange={(e) => setImportantPhoneNumber(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -271,6 +366,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Шуудангийн хаяг</label>
               <InputText
+                onChange={(e) => setAddressEmail(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -279,6 +375,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Имэйл</label>
               <InputText
+                onChange={(e) => setEmail(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -327,6 +424,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Төрсөн газар</label>
               <InputText
+                onChange={(e) => setBornAddress(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -350,6 +448,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Мэргэжил</label>
               <InputText
+                onChange={(e) => setProfession(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -374,6 +473,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Гадаад паспортын дугаар</label>
               <InputText
+                onChange={(e) => setPassportNumber(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -418,6 +518,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Нэмэлт тайлбар</label>
               <InputText
+                onChange={(e) => setDescription(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -450,6 +551,7 @@ const AddTeacherForm = () => {
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Жолооны үнэмлэхний дугаар</label>
               <InputText
+                onChange={(e) => setDrive(e.target.value)}
                 id="username"
                 aria-describedby="username-help"
                 className="border border-gray-500 "
@@ -472,7 +574,7 @@ const AddTeacherForm = () => {
       </div>
 
       <div className="card flex justify-center text-center mx-auto p-2  my-10 bg-mainColor text-white w-max hover:bg-blue-500">
-        <Button label="Хадгалах" />
+        <Button onClick={handleSave} label="Хадгалах" />
       </div>
     </>
   );
