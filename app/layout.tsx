@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="flex gap-10">
           <Sidebar />
-          <Container>{children}</Container>
+          {children}
         </div>
       </body>
     </html>

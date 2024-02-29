@@ -1,7 +1,6 @@
 "use client";
 import { InputText } from "primereact/inputtext";
 import {
-  menu,
   aimag,
   duureg,
   country,
@@ -16,7 +15,6 @@ import {
   driveLicence,
   para,
 } from "../utils/Menu";
-import Link from "next/link";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { use, useState } from "react";
@@ -25,30 +23,48 @@ import { LuLoader2 } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
 import Image from "next/image";
 
-
 type DropdownOption = {
   title: string;
   // Add other properties if needed
 };
 
-
-
 const AddTeacherForm = () => {
   const [selectedCity, setSelectedCity] = useState<DropdownOption | null>(null);
-  const [selectedDistrict, setSelectedDistrict] = useState<DropdownOption | null>(null);
-  const [selectedLivingCity, setSelectedLivingCity] = useState<DropdownOption | null>(null);
-  const [selectedLivingDistrict, setSelectedLivingDistrict] = useState<DropdownOption | null>(null);
-  const [selectedCountry, setSelectedCountry] = useState<DropdownOption | null>(null);
-  const [selectedVndes, setSelectedVndes] = useState<DropdownOption | null>(null);
-  const [selectedGaral, setSelectedGaral] = useState<DropdownOption | null>(null);
-  const [selectedEducation, setSelectedEducation] = useState<DropdownOption | null>(null);
-  const [selectedAward, setSelectedAward] = useState<DropdownOption | null>(null);
-  const [selectedBlood, setSelectedBlood] = useState<DropdownOption | null>(null);
-  const [selectedMarried, setSelectedMarried] = useState<DropdownOption | null>(null);
-  const [selectedTsereg, setSelectedTsereg] = useState<DropdownOption | null>(null);
-  const [selectedDrive, setSelectedDrive] = useState<DropdownOption | null>(null);
+  const [selectedDistrict, setSelectedDistrict] =
+    useState<DropdownOption | null>(null);
+  const [selectedLivingCity, setSelectedLivingCity] =
+    useState<DropdownOption | null>(null);
+  const [selectedLivingDistrict, setSelectedLivingDistrict] =
+    useState<DropdownOption | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<DropdownOption | null>(
+    null
+  );
+  const [selectedVndes, setSelectedVndes] = useState<DropdownOption | null>(
+    null
+  );
+  const [selectedGaral, setSelectedGaral] = useState<DropdownOption | null>(
+    null
+  );
+  const [selectedEducation, setSelectedEducation] =
+    useState<DropdownOption | null>(null);
+  const [selectedAward, setSelectedAward] = useState<DropdownOption | null>(
+    null
+  );
+  const [selectedBlood, setSelectedBlood] = useState<DropdownOption | null>(
+    null
+  );
+  const [selectedMarried, setSelectedMarried] = useState<DropdownOption | null>(
+    null
+  );
+  const [selectedTsereg, setSelectedTsereg] = useState<DropdownOption | null>(
+    null
+  );
+  const [selectedDrive, setSelectedDrive] = useState<DropdownOption | null>(
+    null
+  );
   const [selectedPara, setSelectedPara] = useState<DropdownOption | null>(null);
-  const [selectedTetgever, setSelectedTetgever] = useState<DropdownOption | null>(null);
+  const [selectedTetgever, setSelectedTetgever] =
+    useState<DropdownOption | null>(null);
   const [image, setImage] = useState("");
   const [imageIsDeleting, setImageIsDeleting] = useState(false);
   const [parentsName, setParentsName] = useState("");
@@ -98,10 +114,10 @@ const AddTeacherForm = () => {
       });
   };
 
-  const handleSave = (e:any) => {
+  const handleSave = (e: any) => {
     e.preventDefault();
 
-    console.log(selectedEducation)
+    console.log(selectedEducation);
 
     const data = {
       name: name,
@@ -137,33 +153,28 @@ const AddTeacherForm = () => {
       drive: drive,
       driveNumber: selectedDrive?.title,
       para: selectedPara?.title,
-      irgenshil: irgenshil
+      irgenshil: irgenshil,
     };
 
     fetch("/api/teacher", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(data),
-    }).then(response=> response.json())
-    .then(data=> {
-      if(data){
-        alert("Amjilttai")
-      }
-      else {
-        alert("Aldaa garlaa")
-      }
-    }).catch(err=> console.log(err))
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          alert("Amjilttai");
+        } else {
+          alert("Aldaa garlaa");
+        }
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <>
-      <div className="flex gap-10">
-        <div className="flex flex-col gap-5 text-[15px]">
-          {menu.map((el) => (
-            <Link key={el.title} href="">
-              {el.title}
-            </Link>
-          ))}
-        </div>
+      <div className="">
+        <h1 className="font-bold text-lg mb-10">Багш нэмэх</h1>
 
         <div className="w-full gap-20">
           <h1 className="text-center font-bold text-lg">
@@ -571,10 +582,9 @@ const AddTeacherForm = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="card flex justify-center text-center mx-auto p-2  my-10 bg-mainColor text-white w-max hover:bg-blue-500">
-        <Button onClick={handleSave} label="Хадгалах" />
+        <div className="flex items-center justify-center  mx-auto my-10 text-center bg-mainColor text-white w-max p-2 rounded-md hover:bg-blue-500">
+          <Button onClick={handleSave} label="Хадгалах" />
+        </div>
       </div>
     </>
   );
