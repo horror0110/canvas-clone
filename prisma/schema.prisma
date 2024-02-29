@@ -52,6 +52,45 @@ model Teacher {
   families             Family[]
 }
 
+model Student {
+  id                   String   @id @default(cuid()) @map("_id")
+  name                 String
+  image                String
+  parentsName          String
+  irgenshil            String
+  registerNumber       String
+  date                 String
+  familyName           String
+  sex                  String
+  country              String
+  city                 String
+  district             String
+  address              String
+  liveCity             String
+  liveDistrict         String
+  liveAddress          String
+  importantPhoneNumber String
+  email                String
+  addressEmail         String
+  bornCountry          String
+  vndes                String
+  bornType             String
+  bornAddress          String
+  education            String
+  profession           String
+  award                String
+  passportNumber       String
+  married              String
+  tsereg               String
+  tetgever             String
+  description          String
+  blood                String
+  drive                String
+  driveNumber          String
+  para                 String
+  families             Family[]
+}
+
 model Family {
   id          String   @id @default(cuid()) @map("_id")
   role        String
@@ -61,6 +100,8 @@ model Family {
   sex         String
   phone       String
   email       String
-  User        Teacher? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Teacher     Teacher? @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
+  Student     Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId   String
 }
