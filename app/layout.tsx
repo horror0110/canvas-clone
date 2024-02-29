@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/Sidebar";
-import Container from "./components/Container";
+import { ClerkProvider } from "@clerk/nextjs";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
-
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +18,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="flex gap-10">
-          <Sidebar />
-          {children}
-        </div>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>
+          <div className="flex gap-10">
+            <Sidebar />
+            {children}
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
