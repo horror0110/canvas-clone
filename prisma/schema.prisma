@@ -49,4 +49,18 @@ model Teacher {
   drive                String
   driveNumber          String
   para                 String
+  families             Family[]
+}
+
+model Family {
+  id          String   @id @default(cuid()) @map("_id")
+  role        String
+  parentsName String
+  name        String
+  date        String
+  sex         String
+  phone       String
+  email       String
+  User        Teacher? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
 }
