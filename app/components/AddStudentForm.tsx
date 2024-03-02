@@ -14,7 +14,7 @@ import {
   blood,
   driveLicence,
   para,
-} from "../utils/Menu";
+} from "../../utils/Menu";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { use, useState } from "react";

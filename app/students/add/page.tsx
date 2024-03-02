@@ -2,9 +2,9 @@
 import AddStudentForm from "@/app/components/AddStudentForm";
 import Container from "@/app/components/Container";
 import FamilyTable from "@/app/components/FamilyTable";
-import { menu } from "@/app/utils/Menu";
+import { menu } from "../../../utils/Menu";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AddStudentsPage = () => {
   const [activeSection, setActiveSection] = useState("main");

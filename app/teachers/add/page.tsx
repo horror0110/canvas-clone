@@ -2,12 +2,16 @@
 import AddTeacherForm from "@/app/components/AddTeacherForm";
 import Container from "@/app/components/Container";
 import FamilyTable from "@/app/components/FamilyTable";
-import { menu } from "@/app/utils/Menu";
+import { menu } from "../../../utils/Menu";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { checkRole } from "@/utils/roles";
+import { redirect } from "next/navigation";
 
 const AddTeacherPage = () => {
   const [activeSection, setActiveSection] = useState("main");
+
+ 
 
   return (
     <Container>

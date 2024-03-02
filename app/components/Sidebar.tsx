@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Tooltip } from "primereact/tooltip";
 import { IoMdPersonAdd } from "react-icons/io";
 import { IoIosPersonAdd } from "react-icons/io";
+import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -26,6 +27,14 @@ const Sidebar = () => {
           size={25}
           className="cursor-pointer student"
           onClick={() => router.push("/students/add")}
+        />
+
+        <LiaChalkboardTeacherSolid
+          data-pr-tooltip="Багш нар"
+          color="white"
+          size={25}
+          className="cursor-pointer student"
+          onClick={() => router.push("/teachers")}
         />
       </div>
 
