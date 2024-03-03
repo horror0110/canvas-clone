@@ -1,9 +1,10 @@
-import React from 'react'
+import { auth } from "@clerk/nextjs";
+import React from "react";
 
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  const { userId } = auth();
 
-export default Home
+  return <div>Home</div>;
+};
+
+export default Home;

@@ -45,24 +45,34 @@ const TeacherListPage = () => {
           field=""
           body={indexBodyTemplate}
           header=""
-          style={{ width: "25%" }}
+          style={{ width: "5%" }}
         ></Column>
         <Column
           field=""
           header="Зураг"
           body={imageBodyTemplate}
-          style={{ width: "25%" }}
+          style={{ width: "5%" }}
         ></Column>
         <Column
           field="parentsName"
           header="Овог"
-          style={{ width: "25%" }}
+          style={{ width: "5%" }}
         ></Column>
-        <Column field="name" header="Нэр" style={{ width: "25%" }}></Column>
+        <Column field="name" header="Нэр" style={{ width: " 5%" }}></Column>
+
         <Column
           field="registerNumber"
-          header="Регистер"
-          style={{ width: "25%" }}
+          header="Регистрийн дугаар"
+          style={{ width: "5%" }}
+        ></Column>
+
+        <Column field="email" header="Имэйл" style={{ width: "5%" }}></Column>
+        <Column field="sex" header="Хүйс" style={{ width: "5%" }}></Column>
+
+        <Column
+          field="date"
+          header="Төрсөн он сар өдөр"
+          style={{ width: "15%" }}
         ></Column>
       </DataTable>
     </div>
