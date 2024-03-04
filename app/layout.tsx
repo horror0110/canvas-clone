@@ -4,6 +4,7 @@ import "./globals.css";
 import Sidebar from "./components/Sidebar";
 import { ClerkProvider } from "@clerk/nextjs";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
+import { GlobalProvider } from "@/context/GlobalContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,14 +20,16 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
-          <div className="flex gap-10">
-            <Sidebar />
-            {children}
-          </div>
-        </body>
-      </html>
+      <GlobalProvider>
+        <html lang="en" suppressHydrationWarning>
+          <body className={inter.className}>
+            <div className="flex gap-10">
+              <Sidebar />
+              {children}
+            </div>
+          </body>
+        </html>
+      </GlobalProvider>
     </ClerkProvider>
   );
 }

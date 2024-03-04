@@ -1,35 +1,18 @@
 "use client";
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CiVideoOn } from "react-icons/ci";
 import { IoTimeOutline } from "react-icons/io5";
 import { TbPlayerPlayFilled } from "react-icons/tb";
 import { PiStudent } from "react-icons/pi";
 import { Button } from "primereact/button";
 import Container from "./components/Container";
+import { GlobalContext } from "@/context/GlobalContext";
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
-
-  const storedCart = localStorage.getItem("cart");
-  const initialCart = storedCart ? JSON.parse(storedCart) : [];
-  const [cart, setCart] = useState(initialCart);
-
-  const handleCart = async (course: any) => {
-    const isProductInCart =
-      cart.length > 0 && cart.some((el: any) => el.id === course.id); // return true or false
-
-    if (isProductInCart) {
-      alert("ene surgalt ali hediin sagsand bna");
-    } else {
-      let updatedCart = [...cart, course];
-
-      setCart(updatedCart);
-
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-    }
-  };
+  const { handleCart }:any = useContext(GlobalContext);
 
   useEffect(() => {
     fetch("/api/courses", {
