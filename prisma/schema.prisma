@@ -114,9 +114,18 @@ model Course {
   price        String
   description  String
   Student      Student? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  videos       Video[]
   userId       String
   studentCount String
   videoCount   String
   views        String
   timeLength   String
+}
+
+model Video {
+  id       String  @id @default(cuid()) @map("_id")
+  title    String
+  url      String
+  Course   Course? @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId String
 }

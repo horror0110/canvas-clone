@@ -31,8 +31,6 @@ const Home = () => {
     }
   };
 
-  console.log(cart);
-
   useEffect(() => {
     fetch("/api/courses", {
       method: "GET",
