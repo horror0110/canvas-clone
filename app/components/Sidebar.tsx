@@ -5,6 +5,9 @@ import { Tooltip } from "primereact/tooltip";
 import { IoMdPersonAdd } from "react-icons/io";
 import { IoIosPersonAdd } from "react-icons/io";
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
+import { SiCoursera } from "react-icons/si";
+import { CiShoppingCart } from "react-icons/ci";
+import { FaVideo } from "react-icons/fa";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -35,6 +38,28 @@ const Sidebar = () => {
           size={25}
           className="cursor-pointer student"
           onClick={() => router.push("/teachers")}
+        />
+
+        <SiCoursera
+          data-pr-tooltip="Сургалтууд"
+          color="white"
+          size={25}
+          className="cursor-pointer student"
+          onClick={() => router.push("/")}
+        />
+        <FaVideo
+          data-pr-tooltip="Миний сургалтууд"
+          color="white"
+          size={25}
+          className="cursor-pointer student"
+          onClick={() => router.push("/purchased")}
+        />
+        <CiShoppingCart
+          data-pr-tooltip="Сагс"
+          color="white"
+          size={25}
+          className="cursor-pointer student"
+          onClick={() => router.push("/cart")}
         />
       </div>
 

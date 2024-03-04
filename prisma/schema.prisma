@@ -89,6 +89,7 @@ model Student {
   driveNumber          String
   para                 String
   families             Family[]
+  purchasedCourses     Course[]
 }
 
 model Family {
@@ -104,4 +105,18 @@ model Family {
   userId      String
   Student     Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
   studentId   String
+}
+
+model Course {
+  id           String   @id @default(cuid()) @map("_id")
+  title        String
+  salePrice    String
+  price        String
+  description  String
+  Student      Student? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  studentCount String
+  videoCount   String
+  views        String
+  timeLength   String
 }

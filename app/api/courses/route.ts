@@ -5,30 +5,23 @@ export const POST = async (req: Request) => {
   try {
     const body = await req.json();
 
-    const student = await prisma.student.create({
+    const student = await prisma.course.create({
       data: { ...body },
     });
 
-    return NextResponse.json({ data: "Student has been created" });
+    return NextResponse.json({ data: "Course has been created" });
   } catch (err) {
-    console.log("error at api/student", err);
+    console.log("error at api/courses", err);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
-
 export const GET = async (req: Request) => {
   try {
-    const students = await prisma.student.findMany({
-      include: {
-        families: true,
-      },
-    });
+    const courses = await prisma.course.findMany();
 
-    return NextResponse.json({ data: students });
+    return NextResponse.json({ data: courses });
   } catch (err) {
-    console.log("error at api/student", err);
+    console.log("error at api/courses", err);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
-
-

@@ -1,0 +1,36 @@
+const courses = [
+  {
+    title: "GraphQL backend эхнээс нь дуустал, React вэб сайтын хамт!",
+    salePrice: 199000,
+    price: "49000",
+    image: "test.jpg",
+    author: "Amarbat",
+    students: 14,
+    lessonCount: 117,
+    lessonLength: "19 цаг 25 мин",
+    views: "19 цаг 25 мин",
+  },
+  {
+    title: "GraphQL backend эхнээс нь дуустал, React вэб сайтын хамт!",
+    salePrice: 199000,
+    price: "49000",
+    image: "test.jpg",
+    author: "Amarbat",
+    students: 14,
+    lessonCount: 117,
+    lessonLength: "19 цаг 25 мин",
+    views: "19 цаг 25 мин",
+  },
+  {
+    title: "GraphQL backend эхнээс нь дуустал, React вэб сайтын хамт!",
+    salePrice: 199000,
+    price: "49000",
+    image: "test.jpg",
+    author: "Amarbat",
+    students: 14,
+    lessonCount: 117,
+    lessonLength: "19 цаг 25 мин",
+    views: "19 цаг 25 мин",
+  },
+];
+export { courses };
