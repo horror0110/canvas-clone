@@ -11,13 +11,17 @@
   "dependencies": {
     "@clerk/nextjs": "^4.29.8",
     "@prisma/client": "^5.10.2",
+    "@stripe/react-stripe-js": "^2.5.1",
+    "@stripe/stripe-js": "^3.0.6",
     "@uploadthing/react": "^6.2.4",
+    "axios": "^1.6.7",
     "next": "14.1.0",
     "primereact": "^10.5.1",
     "prisma": "^5.10.2",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
+    "stripe": "^14.19.0",
     "uploadthing": "^6.4.1"
   },
   "devDependencies": {
