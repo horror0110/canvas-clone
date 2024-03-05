@@ -12,16 +12,12 @@ const stripePromise = loadStripe(
 const CartPage = () => {
   const [clientSecret, setClientSecret] = useState("");
 
-
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:3000/api/create-payment-intent`,
-          {
-            method: "POST",
-          }
-        );
+        const res = await fetch(`/api/create-payment-intent`, {
+          method: "POST",
+        });
         const data = await res.json();
         setClientSecret(data.clientSecret);
       } catch (err) {
@@ -32,12 +28,14 @@ const CartPage = () => {
     makeRequest();
   }, []);
 
-  const options:StripeElementsOptions={
+  const options: StripeElementsOptions = {
     clientSecret,
-    appearance:{
-      theme:"stripe"
-    }
-  }
+    appearance: {
+      theme: "stripe",
+    },
+  };
+
+  console.log(clientSecret);
 
   return (
     <div>

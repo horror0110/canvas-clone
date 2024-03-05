@@ -8,6 +8,7 @@ import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import { SiCoursera } from "react-icons/si";
 import { CiShoppingCart } from "react-icons/ci";
 import { FaVideo } from "react-icons/fa";
+import { MdOutlinePayment } from "react-icons/md";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -60,6 +61,14 @@ const Sidebar = () => {
           size={25}
           className="cursor-pointer student"
           onClick={() => router.push("/cart")}
+        />
+
+        <MdOutlinePayment
+          data-pr-tooltip="Гүйлгээнүүд"
+          color="white"
+          size={25}
+          className="cursor-pointer student"
+          onClick={() => router.push("/orders")}
         />
       </div>
 

@@ -90,6 +90,7 @@ model Student {
   para                 String
   families             Family[]
   purchasedCourses     Course[]
+  orders               Order[]
 }
 
 model Family {
@@ -128,4 +129,13 @@ model Video {
   url      String
   Course   Course? @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId String
+}
+
+model Order {
+  id        String   @id @default(cuid()) @map("_id")
+  createdAt DateTime @default(now())
+  products  Json[]
+  price     String
+  Student   Student? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
 }

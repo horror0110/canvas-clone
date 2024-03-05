@@ -12,6 +12,7 @@ import Container from "./Container";
 import Image from "next/image";
 import { Button } from "primereact/button";
 import { CgLayoutGrid } from "react-icons/cg";
+import { AnyARecord } from "dns";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -73,6 +74,19 @@ const CheckoutForm = () => {
 
     setIsLoading(true);
 
+    const body = {
+      products: cart,
+      price: calculateTotalPrice().toString(),
+      userId: "123",
+    };
+
+    fetch("/api/order", {
+      method: "POST",
+      body: JSON.stringify(body),
+    })
+      .then((response: any) => response.json())
+      .then((data: any) => console.log(data));
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -81,16 +95,13 @@ const CheckoutForm = () => {
       },
     });
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message || "Something went wrong!");
     } else {
       setMessage("An unexpected error occurred.");
     }
+
+   
 
     setIsLoading(false);
   };
