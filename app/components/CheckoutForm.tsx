@@ -101,8 +101,6 @@ const CheckoutForm = () => {
       setMessage("An unexpected error occurred.");
     }
 
-   
-
     setIsLoading(false);
   };
 
@@ -136,6 +134,7 @@ const CheckoutForm = () => {
       <h1 className="font-semibold text-lg mb-5 mt-10">
         Total Price: {calculateTotalPrice()}
       </h1>
+    
 
       <form
         id="payment-form"

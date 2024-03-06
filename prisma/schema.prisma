@@ -116,11 +116,13 @@ model Course {
   description  String
   Student      Student? @relation(fields: [userId], references: [id], onDelete: Cascade)
   videos       Video[]
-  userId       String
-  studentCount String
-  videoCount   String
-  views        String
-  timeLength   String
+  userId       String?
+  studentCount String?
+  videoCount   String?
+  views        String?
+  timeLength   String?
+  teacher      String
+  image        String
 }
 
 model Video {

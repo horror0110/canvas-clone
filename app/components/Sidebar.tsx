@@ -9,6 +9,7 @@ import { SiCoursera } from "react-icons/si";
 import { CiShoppingCart } from "react-icons/ci";
 import { FaVideo } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
+import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -69,6 +70,14 @@ const Sidebar = () => {
           size={25}
           className="cursor-pointer student"
           onClick={() => router.push("/orders")}
+        />
+
+        <AiOutlineVideoCameraAdd
+          data-pr-tooltip="Сургалт нэмэх"
+          color="white"
+          size={25}
+          className="cursor-pointer student"
+          onClick={() => router.push("/orders/add")}
         />
       </div>
 

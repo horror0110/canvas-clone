@@ -11,8 +11,6 @@ import { redirect } from "next/navigation";
 const AddTeacherPage = () => {
   const [activeSection, setActiveSection] = useState("main");
 
- 
-
   return (
     <Container>
       <div className="flex gap-10">

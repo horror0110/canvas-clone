@@ -12,7 +12,7 @@ import { GlobalContext } from "@/context/GlobalContext";
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
-  const { handleCart }:any = useContext(GlobalContext);
+  const { handleCart }: any = useContext(GlobalContext);
 
   useEffect(() => {
     fetch("/api/courses", {
@@ -31,38 +31,46 @@ const Home = () => {
           <div className="max-w-[220px] text-center" key={index}>
             <Image
               alt="course"
-              src="/video.jpg"
+              src={course.image}
               width={220}
               height={200}
               className="object-cover"
             />
             <h1 className="font-semibold text-[13px] my-2 flex gap-1 ">
-              {" "}
               <CiVideoOn size={30} />
               {course.title}
             </h1>
             <div className="flex flex-col gap-2 text-xs text-gray-600">
               <div className="flex items-center justify-between">
-                <span className="flex gap-1 items-center">
-                  <CiVideoOn size={15} />
-                  {course.videoCount} видео хичээл
-                </span>
-                <span className="flex items-center gap-1 ">
-                  <IoTimeOutline />
-                  {course.timeLength}
-                </span>
+                {course.videoCount && (
+                  <span className="flex gap-1 items-center">
+                    <CiVideoOn size={15} />
+                    {course.videoCount} видео хичээл
+                  </span>
+                )}
+
+                {course.timeLength && (
+                  <span className="flex items-center gap-1 ">
+                    <IoTimeOutline />
+                    {course.timeLength}
+                  </span>
+                )}
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="flex items-center gap-1">
-                  <TbPlayerPlayFilled />
-                  {course.views} харсан
-                </span>
+                {course.views && (
+                  <span className="flex items-center gap-1">
+                    <TbPlayerPlayFilled />
+                    {course.views} харсан
+                  </span>
+                )}
 
-                <span className="flex items-center gap-1">
-                  <PiStudent />
-                  {course.studentCount} сурагчид
-                </span>
+                {course.studentCount && (
+                  <span className="flex items-center gap-1">
+                    <PiStudent />
+                    {course.studentCount} сурагчид
+                  </span>
+                )}
               </div>
               <div className="flex items-center justify-between  ">
                 <Button
