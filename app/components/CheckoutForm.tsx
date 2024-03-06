@@ -114,7 +114,7 @@ const CheckoutForm = () => {
         {cart.map((course: any, index: number) => (
           <div className="flex items-center gap-3" key={index}>
             <Image
-              src="/video.jpg"
+              src={course.image}
               alt="image"
               width={50}
               height={50}
@@ -134,7 +134,6 @@ const CheckoutForm = () => {
       <h1 className="font-semibold text-lg mb-5 mt-10">
         Total Price: {calculateTotalPrice()}
       </h1>
-    
 
       <form
         id="payment-form"

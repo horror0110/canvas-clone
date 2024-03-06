@@ -77,7 +77,7 @@ const Sidebar = () => {
           color="white"
           size={25}
           className="cursor-pointer student"
-          onClick={() => router.push("/orders/add")}
+          onClick={() => router.push("/course/add")}
         />
       </div>
 
