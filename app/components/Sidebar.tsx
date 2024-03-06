@@ -1,6 +1,4 @@
-"use client";
-import { UserButton } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+import { UserButton, auth } from "@clerk/nextjs";
 import { Tooltip } from "primereact/tooltip";
 import { IoMdPersonAdd } from "react-icons/io";
 import { IoIosPersonAdd } from "react-icons/io";
@@ -10,75 +8,142 @@ import { CiShoppingCart } from "react-icons/ci";
 import { FaVideo } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
+import Link from "next/link";
+import { checkRole } from "@/utils/roles";
 
 const Sidebar = () => {
-  const router = useRouter();
+  const isAdmin = checkRole("admin");
+  const isTeacher = checkRole("teacher");
+
   return (
-    <div className="bg-mainColor h-screen p-2 sticky left-0 top-0  ">
+    <div className="bg-mainColor h-screen p-2 sticky left-0 top-0">
       <div className="flex flex-col gap-5">
         <UserButton />
 
-        <IoMdPersonAdd
-          data-pr-tooltip="Багш нэмэх"
-          color="white"
-          size={25}
-          className="cursor-pointer teacher"
-          onClick={() => router.push("/teachers/add")}
-        />
+        <div className="flex flex-col gap-5">
+          {isAdmin && (
+            <div className="flex flex-col gap-5">
+              <Link href="/teachers/add">
+                <IoMdPersonAdd
+                  data-pr-tooltip="Багш нэмэх"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer teacher"
+                />
+              </Link>
 
-        <IoIosPersonAdd
-          data-pr-tooltip="Оюутан нэмэх"
-          color="white"
-          size={25}
-          className="cursor-pointer student"
-          onClick={() => router.push("/students/add")}
-        />
+              <Link href="/students/add">
+                <IoIosPersonAdd
+                  data-pr-tooltip="Оюутан нэмэх"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
+              <Link href="/teachers">
+                <LiaChalkboardTeacherSolid
+                  data-pr-tooltip="Багш нар"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
 
-        <LiaChalkboardTeacherSolid
-          data-pr-tooltip="Багш нар"
-          color="white"
-          size={25}
-          className="cursor-pointer student"
-          onClick={() => router.push("/teachers")}
-        />
+              <Link href="/">
+                <SiCoursera
+                  data-pr-tooltip="Сургалтууд"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
+              <Link href="/">
+                <FaVideo
+                  data-pr-tooltip="Миний сургалтууд"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
+              <Link href="/cart">
+                <CiShoppingCart
+                  data-pr-tooltip="Сагс"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
 
-        <SiCoursera
-          data-pr-tooltip="Сургалтууд"
-          color="white"
-          size={25}
-          className="cursor-pointer student"
-          onClick={() => router.push("/")}
-        />
-        <FaVideo
-          data-pr-tooltip="Миний сургалтууд"
-          color="white"
-          size={25}
-          className="cursor-pointer student"
-          onClick={() => router.push("/purchased")}
-        />
-        <CiShoppingCart
-          data-pr-tooltip="Сагс"
-          color="white"
-          size={25}
-          className="cursor-pointer student"
-          onClick={() => router.push("/cart")}
-        />
+              <Link href="/orders">
+                <MdOutlinePayment
+                  data-pr-tooltip="Гүйлгээнүүд"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
+              <Link href="/course/add">
+                <AiOutlineVideoCameraAdd
+                  data-pr-tooltip="Сургалт нэмэх"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
+            </div>
+          )}
+          {isTeacher && !isAdmin && (
+            <div className="flex flex-col gap-5">
+              <Link href="/course/add">
+                <AiOutlineVideoCameraAdd
+                  data-pr-tooltip="Сургалт нэмэх"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
 
-        <MdOutlinePayment
-          data-pr-tooltip="Гүйлгээнүүд"
-          color="white"
-          size={25}
-          className="cursor-pointer student"
-          onClick={() => router.push("/orders")}
-        />
+              <Link href="/">
+                <SiCoursera
+                  data-pr-tooltip="Сургалтууд"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
+            </div>
+          )}
+          {!isAdmin && !isTeacher && (
+            <div className="flex flex-col gap-5">
+              <Link href="/">
+                <SiCoursera
+                  data-pr-tooltip="Сургалтууд"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
 
-        <AiOutlineVideoCameraAdd
-          data-pr-tooltip="Сургалт нэмэх"
-          color="white"
-          size={25}
-          className="cursor-pointer student"
-          onClick={() => router.push("/course/add")}
-        />
+              <Link href="/cart">
+                <CiShoppingCart
+                  data-pr-tooltip="Сагс"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
+
+              <Link href="/">
+                <FaVideo
+                  data-pr-tooltip="Миний сургалтууд"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
 
       <Tooltip target=".teacher" />
