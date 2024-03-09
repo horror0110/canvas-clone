@@ -3,37 +3,42 @@ import { GlobalContext } from "@/context/GlobalContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import Confetti from "react-confetti";
-import axios from "axios";
 
 const SuccessPage = () => {
   const searchParams = useSearchParams();
 
-  const { cart, calculateTotalPrice }: any = useContext(GlobalContext);
+  const { cart, calculateTotalPrice, setCart }: any = useContext(GlobalContext);
 
   const router = useRouter();
 
   const isSuccess = searchParams.get("redirect_status");
 
   useEffect(() => {
-    const makeRequest = async () => {
+    if (isSuccess === "succeeded") {
       const body = {
         products: cart,
         price: calculateTotalPrice().toString(),
       };
       try {
-        await fetch(`/api/order`, {
+        fetch(`/api/order`, {
           method: "POST",
           body: JSON.stringify(body),
-        });
-        setTimeout(() => {
-          router.push("/orders");
-        }, 5000);
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.data) {
+              setTimeout(() => {
+                router.push("/orders");
+              }, 5000);
+              setCart("");
+
+              localStorage.removeItem("cart");
+            }
+          });
       } catch (err) {
         console.log(err);
       }
-    };
-
-    makeRequest();
+    }
   }, [isSuccess, router, cart, calculateTotalPrice]);
 
   return (

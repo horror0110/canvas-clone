@@ -33,10 +33,14 @@ export const GlobalProvider: React.FC<GlobalContextProps> = ({ children }) => {
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
   };
+  const calculateTotalPrice = () => {
+    if (!Array.isArray(cart)) {
+      console.error("Cart is not an array:", cart);
+      return 0; // or any other appropriate fallback value
+    }
 
-  const calculateTotalPrice: any = () => {
-    const totalPrice = cart.reduce((accumulator: any, currentItem: any) => {
-      return parseInt(accumulator) + parseInt(currentItem.price);
+    const totalPrice = cart.reduce((accumulator, currentItem) => {
+      return accumulator + parseInt(currentItem.price);
     }, 0);
 
     return totalPrice;
@@ -48,7 +52,7 @@ export const GlobalProvider: React.FC<GlobalContextProps> = ({ children }) => {
         cart,
         setCart,
         handleCart,
-        calculateTotalPrice
+        calculateTotalPrice,
       }}
     >
       {children}

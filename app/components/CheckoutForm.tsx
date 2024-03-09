@@ -79,6 +79,10 @@ const CheckoutForm = () => {
     setIsLoading(false);
   };
 
+  if (cart.length === 0) {
+    return <div>Basket is empty!!</div>;
+  }
+
   return (
     <Container>
       <h1 className="font-bold text-lg m-10">
