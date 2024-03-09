@@ -13,7 +13,9 @@ export const GlobalContext = createContext<MyContextData | undefined>(
 );
 
 export const GlobalProvider: React.FC<GlobalContextProps> = ({ children }) => {
-  const storedCart = localStorage.getItem("cart");
+  const storedCart =
+    typeof window !== "undefined" ? localStorage.getItem("cart") : null;
+
   const initialCart = storedCart ? JSON.parse(storedCart) : [];
   const [cart, setCart] = useState(initialCart);
 
@@ -32,12 +34,21 @@ export const GlobalProvider: React.FC<GlobalContextProps> = ({ children }) => {
     }
   };
 
+  const calculateTotalPrice: any = () => {
+    const totalPrice = cart.reduce((accumulator: any, currentItem: any) => {
+      return parseInt(accumulator) + parseInt(currentItem.price);
+    }, 0);
+
+    return totalPrice;
+  };
+
   return (
     <GlobalContext.Provider
       value={{
         cart,
         setCart,
-        handleCart
+        handleCart,
+        calculateTotalPrice
       }}
     >
       {children}

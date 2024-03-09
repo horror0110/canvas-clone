@@ -11,26 +11,15 @@ import { useContext, useEffect, useState } from "react";
 import Container from "./Container";
 import Image from "next/image";
 import { Button } from "primereact/button";
-import { CgLayoutGrid } from "react-icons/cg";
-import { AnyARecord } from "dns";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { cart }: any = useContext(GlobalContext);
-
-  const calculateTotalPrice: any = () => {
-    const totalPrice = cart.reduce((accumulator: any, currentItem: any) => {
-      return parseInt(accumulator) + parseInt(currentItem.price);
-    }, 0);
-
-    return totalPrice;
-  };
+  const { cart, calculateTotalPrice }: any = useContext(GlobalContext);
 
   useEffect(() => {
     if (!stripe) {
@@ -63,9 +52,8 @@ const CheckoutForm = () => {
     });
   }, [stripe]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit: any = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -73,19 +61,6 @@ const CheckoutForm = () => {
     }
 
     setIsLoading(true);
-
-    const body = {
-      products: cart,
-      price: calculateTotalPrice().toString(),
-      userId: "123",
-    };
-
-    fetch("/api/order", {
-      method: "POST",
-      body: JSON.stringify(body),
-    })
-      .then((response: any) => response.json())
-      .then((data: any) => console.log(data));
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -135,11 +110,7 @@ const CheckoutForm = () => {
         Total Price: {calculateTotalPrice()}
       </h1>
 
-      <form
-        id="payment-form"
-        onSubmit={handleSubmit}
-        className="  flex flex-col gap-8 "
-      >
+      <form id="payment-form" className="  flex flex-col gap-8 ">
         <LinkAuthenticationElement id="link-authentication-element" />
         <PaymentElement
           id="payment-element"
@@ -148,6 +119,7 @@ const CheckoutForm = () => {
           }}
         />
         <button
+          onClick={handleSubmit}
           disabled={isLoading || !stripe || !elements}
           id="submit"
           className="bg-red-500 text-white p-4 rounded-md w-28"

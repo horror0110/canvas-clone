@@ -139,5 +139,5 @@ model Order {
   products  Json[]
   price     String
   Student   Student? @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
+  userId    String?
 }

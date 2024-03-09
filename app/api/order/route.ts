@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
   try {
-    const { price, products } = await req.json();
+    const { price, products, error } = await req.json();
 
     const { userId } = auth();
 
@@ -14,6 +14,8 @@ export const POST = async (req: Request) => {
       price: price,
 
       userId: userId,
+
+      error: error,
     };
 
     const order = await prisma.order.create({
