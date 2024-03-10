@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { createContext, useRef, useState } from "react";
 
 interface GlobalContextProps {
   children: React.ReactNode;
@@ -19,18 +19,32 @@ export const GlobalProvider: React.FC<GlobalContextProps> = ({ children }) => {
   const initialCart = storedCart ? JSON.parse(storedCart) : [];
   const [cart, setCart] = useState(initialCart);
 
+  const toast: any = useRef(null);
+
   const handleCart = async (course: any) => {
     const isProductInCart =
       cart.length > 0 && cart.some((el: any) => el.id === course.id); // return true or false
 
     if (isProductInCart) {
-      alert("ene surgalt ali hediin sagsand bna");
+      toast.current.show({
+        severity: "warn",
+        summary: "Warning",
+        detail: "Энэ сургалт аль хэдийнээ сагсанд орсон байна",
+        life: 3000,
+      });
     } else {
       let updatedCart = [...cart, course];
 
       setCart(updatedCart);
 
       localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+      toast.current.show({
+        severity: "success",
+        summary: "Success",
+        detail: "Сагсанд нэмэгдлээ",
+        life: 3000,
+      });
     }
   };
   const calculateTotalPrice = () => {
@@ -53,6 +67,7 @@ export const GlobalProvider: React.FC<GlobalContextProps> = ({ children }) => {
         setCart,
         handleCart,
         calculateTotalPrice,
+        toast,
       }}
     >
       {children}
