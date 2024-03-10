@@ -1,7 +1,7 @@
 "use client";
-import { auth } from "@clerk/nextjs";
+
 import Image from "next/image";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CiVideoOn } from "react-icons/ci";
 import { IoTimeOutline } from "react-icons/io5";
 import { TbPlayerPlayFilled } from "react-icons/tb";
@@ -12,6 +12,7 @@ import { GlobalContext } from "@/context/GlobalContext";
 import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
 import { UploadButton } from "./components/uploadThing";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
@@ -22,6 +23,7 @@ const Home = () => {
   const [getId, setGetId] = useState("");
   const [visible, setVisible] = useState(false);
   const [video, setVideo] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     fetch("/api/courses", {
@@ -128,9 +130,21 @@ const Home = () => {
                   className="bg-mainColor  text-white p-2 mt-2"
                   label="Сагсанд хийх"
                 />
+
                 <s>{course.salePrice}</s>
                 <span>{course.price}</span>
               </div>
+
+              <Button
+                className="bg-mainColor  text-white p-2 mt-2"
+                label="Сургалтаа үзэх"
+                onClick={() => router.push(`/course/view/${course.id}`)}
+              />
+              <Button
+                className="bg-mainColor  text-white p-2 mt-2"
+                label="Дэлгэрэнгүй харах"
+                onClick={() => router.push(`/course/${course.id}`)}
+              />
             </div>
           </div>
         ))}
