@@ -25,18 +25,52 @@ const SuccessPage = () => {
           body: JSON.stringify(body),
         })
           .then((response) => response.json())
-          .then((data) => {
-            if (data.data) {
-              setTimeout(() => {
-                router.push("/orders");
-              }, 5000);
-              setCart("");
+          .then((data: any) => {
+            // if (data.data) {
+            //   setTimeout(() => {
+            //     router.push("/orders");
+            //   }, 5000);
+            //   setCart("");
 
-              localStorage.removeItem("cart");
-            }
+            //   localStorage.removeItem("cart");
+            // }
+
+            console.log(data);
           });
       } catch (err) {
         console.log(err);
+      }
+
+      {
+        /*****/
+
+        const ids = cart && cart.map((item: any) => item.id);
+
+        const body2 = {
+          id: ids,
+        };
+
+        console.log(ids);
+
+        try {
+          fetch(`/api/courses`, {
+            method: "PUT",
+            body: JSON.stringify(body2),
+          })
+            .then((response) => response.json())
+            .then((data: any) => {
+              if (data.data) {
+                setTimeout(() => {
+                  router.push("/orders");
+                }, 5000);
+                setCart("");
+
+                localStorage.removeItem("cart");
+              }
+            });
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
   }, [isSuccess, router, cart, calculateTotalPrice]);

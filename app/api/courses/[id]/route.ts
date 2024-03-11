@@ -1,4 +1,5 @@
 import { prisma } from "@/libs/prismadb";
+import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
@@ -15,3 +16,5 @@ export const GET = async (
 
   return NextResponse.json({ data: course });
 };
+
+

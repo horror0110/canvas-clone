@@ -66,7 +66,7 @@ const CheckoutForm = () => {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "https://1234-clone.vercel.app/success",
+        return_url: "http://localhost:3000/success",
       },
     });
 
