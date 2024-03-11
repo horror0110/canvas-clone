@@ -14,6 +14,7 @@ import { checkRole } from "@/utils/roles";
 const Sidebar = () => {
   const isAdmin = checkRole("admin");
   const isTeacher = checkRole("teacher");
+  const { userId } = auth();
 
   return (
     <div className="bg-mainColor h-screen p-2 sticky left-0 top-0">
@@ -57,7 +58,7 @@ const Sidebar = () => {
                   className="cursor-pointer student"
                 />
               </Link>
-              <Link href="/">
+              <Link href={`/mycourse/${userId}`}>
                 <FaVideo
                   data-pr-tooltip="Миний сургалтууд"
                   color="white"
@@ -103,6 +104,15 @@ const Sidebar = () => {
                 />
               </Link>
 
+              <Link href={`/mycourse/${userId}`}>
+                <FaVideo
+                  data-pr-tooltip="Миний сургалтууд"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
+
               <Link href="/">
                 <SiCoursera
                   data-pr-tooltip="Сургалтууд"
@@ -133,7 +143,7 @@ const Sidebar = () => {
                 />
               </Link>
 
-              <Link href="/">
+              <Link href={`/mycourse/${userId}`}>
                 <FaVideo
                   data-pr-tooltip="Миний сургалтууд"
                   color="white"
