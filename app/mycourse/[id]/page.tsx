@@ -11,6 +11,7 @@ import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 import Container from "@/app/components/Container";
 import { GlobalContext } from "@/context/GlobalContext";
+import { IoBookOutline } from "react-icons/io5";
 
 const MyCoursePage = ({ params }: any) => {
   const [courses, setCourses] = useState([]);
@@ -36,77 +37,40 @@ const MyCoursePage = ({ params }: any) => {
         Таны худалдаж авсан сургалтууд
       </h1>
       <Toast ref={toast} />
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid grid-cols-5 gap-y-10">
         {courses.map((course: any, index) => (
-          <div className="max-w-[220px] text-center" key={index}>
-            <Button
-              onClick={() => {}}
-              label="Энэ сургалтанд видео нэмэх"
-              className="text-sm font-semibold bg-slate-800 my-5 px-2 py-1 text-white"
-            />
-            <Image
-              alt="course"
-              src={course.image}
-              width={220}
-              height={200}
-              className="object-cover"
-            />
-            <h1 className="font-semibold text-[13px] my-2 flex gap-1 ">
-              <CiVideoOn size={30} />
+          <div
+            className="w-[250px] text-center  rounded-md cursor-pointer"
+            key={index}
+          >
+            <div className="w-full h-[150px] relative">
+              <Image
+                alt="course"
+                src={course.image}
+                className="object-cover"
+                fill
+              />
+            </div>
+
+            <h1 className="font-bold text-xs my-2 flex gap-1 ">
               {course.title}
             </h1>
-            <div className="flex flex-col gap-2 text-xs text-gray-600">
+            <div className="flex flex-col gap-2 text-[13px] ">
               <div className="flex items-center justify-between">
-                {course.videoCount && (
-                  <span className="flex gap-1 items-center">
-                    <CiVideoOn size={15} />
-                    {course.videoCount} видео хичээл
-                  </span>
-                )}
-
-                {course.timeLength && (
-                  <span className="flex items-center gap-1 ">
-                    <IoTimeOutline />
-                    {course.timeLength}
-                  </span>
-                )}
+                <span className="flex gap-1 items-center text-gray-500">
+                  <IoBookOutline color="#008080" size={15} />
+                  10ш видео хичээл
+                </span>
               </div>
 
-              <div className="flex items-center justify-between">
-                {course.views && (
-                  <span className="flex items-center gap-1">
-                    <TbPlayerPlayFilled />
-                    {course.views} харсан
-                  </span>
-                )}
-
-                {course.studentCount && (
-                  <span className="flex items-center gap-1">
-                    <PiStudent />
-                    {course.studentCount} сурагчид
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center justify-between  ">
-                <Button
-                  onClick={() => {}}
-                  className="bg-mainColor  text-white p-2 mt-2"
-                  label="Сагсанд хийх"
-                />
-
-                <s>{course.salePrice}</s>
-                <span>{course.price}</span>
-              </div>
+              <span className="font-bold text-md text-start ">
+                {course.price}
+              </span>
 
               <Button
-                className="bg-mainColor  text-white p-2 mt-2"
+                className="bg-mainColor  text-white p-2 mt-2 text-xs"
                 label="Сургалтаа үзэх"
                 onClick={() => router.push(`/course/view/${course.id}`)}
-              />
-              <Button
-                className="bg-mainColor  text-white p-2 mt-2"
-                label="Дэлгэрэнгүй харах"
-                onClick={() => router.push(`/course/${course.id}`)}
               />
             </div>
           </div>
