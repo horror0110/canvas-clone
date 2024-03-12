@@ -10,6 +10,7 @@ import { MdOutlinePayment } from "react-icons/md";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import Link from "next/link";
 import { checkRole } from "@/utils/roles";
+import { CiLogin } from "react-icons/ci";
 
 const Sidebar = () => {
   const isAdmin = checkRole("admin");
@@ -154,6 +155,17 @@ const Sidebar = () => {
             </div>
           )}
         </div>
+
+        {!userId && (
+          <Link href="/sign-in">
+            <CiLogin
+              data-pr-tooltip="Нэвтрэх"
+              color="white"
+              size={25}
+              className="cursor-pointer student"
+            />
+          </Link>
+        )}
       </div>
 
       <Tooltip target=".teacher" />

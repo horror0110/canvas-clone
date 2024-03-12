@@ -11,15 +11,20 @@ import { useContext, useEffect, useState } from "react";
 import Container from "./Container";
 import Image from "next/image";
 import { Button } from "primereact/button";
+import { useUser } from "@clerk/clerk-react";
+import { useRouter } from "next/navigation";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
-
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const { cart, calculateTotalPrice }: any = useContext(GlobalContext);
+
+  const { isSignedIn, user, isLoaded } = useUser();
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!stripe) {
@@ -54,6 +59,10 @@ const CheckoutForm = () => {
 
   const handleSubmit: any = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!isSignedIn) {
+      router.push("/sign-in");
+    }
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -80,7 +89,7 @@ const CheckoutForm = () => {
   };
 
   if (cart.length === 0) {
-    return <div>Basket is empty!!</div>;
+    return <div>Сагс хоосон байна..</div>;
   }
 
   return (

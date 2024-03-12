@@ -2,10 +2,6 @@
 
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
-import { CiVideoOn } from "react-icons/ci";
-import { IoTimeOutline } from "react-icons/io5";
-import { TbPlayerPlayFilled } from "react-icons/tb";
-import { PiStudent } from "react-icons/pi";
 import { Button } from "primereact/button";
 import Container from "./components/Container";
 import { GlobalContext } from "@/context/GlobalContext";
@@ -25,7 +21,48 @@ const Home = () => {
   const [getId, setGetId] = useState("");
   const [visible, setVisible] = useState(false);
   const [video, setVideo] = useState("");
+  const [teacher, setTeacher] = useState(false);
+  const [admin, setAdmin] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const body = {
+      role: "teacher",
+    };
+    fetch("/api/checkrole", {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: { "content-type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setTeacher(true);
+        } else {
+          setTeacher(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [teacher]);
+  useEffect(() => {
+    const body = {
+      role: "admin",
+    };
+    fetch("/api/checkrole", {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: { "content-type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setAdmin(true);
+        } else {
+          setAdmin(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [admin]);
 
   useEffect(() => {
     fetch("/api/courses", {
@@ -76,18 +113,28 @@ const Home = () => {
     <Container>
       <h1 className="text-lg my-10 font-bold text-cyan-700">Бүх сургалтууд</h1>
       <Toast ref={toast} />
-      <div className="grid grid-cols-5 gap-y-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5  gap-y-10">
         {courses.map((course: any, index) => (
           <div
             className="w-[250px] text-center  rounded-md cursor-pointer"
             key={index}
           >
-            <div
-              className="rounded-full bg-mainColor w-max p-1 m-1"
-              onClick={() => handleAdd(course.id, course.title)}
-            >
-              <IoMdAdd color="white" />
-            </div>
+            {admin && (
+              <div
+                className="rounded-full bg-mainColor w-max p-1 m-1"
+                onClick={() => handleAdd(course.id, course.title)}
+              >
+                <IoMdAdd color="white" />
+              </div>
+            )}
+            {teacher && (
+              <div
+                className="rounded-full bg-mainColor w-max p-1 m-1"
+                onClick={() => handleAdd(course.id, course.title)}
+              >
+                <IoMdAdd color="white" />
+              </div>
+            )}
 
             <div className="w-full h-[150px] relative">
               <Image

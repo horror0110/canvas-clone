@@ -1,7 +1,18 @@
 import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
-  publicRoutes: ["/api/uploadthing" , "/api/order" , "/api/courses/:id" , "/api/courses" , "/api/mycourse/:id" , "/api/mycourse"],
+  publicRoutes: [
+    "/api/uploadthing",
+    "/api/order",
+    "/api/courses/:id",
+    "/api/courses",
+    "/api/mycourse/:id",
+    "/api/mycourse",
+    "/api/checkrole",
+    "/",
+    "/cart",
+    "/api/create-payment-intent",
+  ],
 });
 
 export const config = {

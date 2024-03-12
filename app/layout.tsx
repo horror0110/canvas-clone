@@ -27,7 +27,6 @@ export default function RootLayout({
               <Sidebar />
               {children}
             </div>
-            p
           </body>
         </html>
       </GlobalProvider>
