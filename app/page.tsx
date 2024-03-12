@@ -11,6 +11,7 @@ import { UploadButton } from "./components/uploadThing";
 import { useRouter } from "next/navigation";
 import { IoBookOutline } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
+import { useUser } from "@clerk/clerk-react";
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
@@ -24,6 +25,7 @@ const Home = () => {
   const [teacher, setTeacher] = useState(false);
   const [admin, setAdmin] = useState(false);
   const router = useRouter();
+  const { user }: any = useUser();
 
   useEffect(() => {
     const body = {
@@ -160,22 +162,19 @@ const Home = () => {
                 {course.price}
               </span>
 
-              <Button
-                onClick={() => handleCart(course)}
-                className="bg-mainColor  text-white p-2 mt-2 text-xs"
-                label="Сагсанд хийх"
-              />
-
-              <Button
-                className="bg-mainColor  text-white p-2 mt-2 text-xs"
-                label="Сургалтаа үзэх"
-                onClick={() => router.push(`/course/view/${course.id}`)}
-              />
-              {/* <Button
-                className="bg-mainColor  text-white p-2 mt-2 text-xs"
-                label="Дэлгэрэнгүй харах"
-                onClick={() => router.push(`/course/${course.id}`)}
-              /> */}
+              {course.ownerStudents.some((el: any) => el === user?.id) ? (
+                <Button
+                  className="bg-mainColor  text-white p-2 mt-2 text-xs"
+                  label="Сургалтаа үзэх"
+                  onClick={() => router.push(`/course/view/${course.id}`)}
+                />
+              ) : (
+                <Button
+                  onClick={() => handleCart(course)}
+                  className="bg-mainColor  text-white p-2 mt-2 text-xs"
+                  label="Сагсанд хийх"
+                />
+              )}
             </div>
           </div>
         ))}

@@ -37,7 +37,7 @@ const MyCoursePage = ({ params }: any) => {
         Таны худалдаж авсан сургалтууд
       </h1>
       <Toast ref={toast} />
-      <div className="grid grid-cols-5 gap-y-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 gap-y-10">
         {courses.map((course: any, index) => (
           <div
             className="w-[250px] text-center  rounded-md cursor-pointer"
