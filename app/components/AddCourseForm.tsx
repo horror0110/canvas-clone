@@ -1,13 +1,16 @@
 "use client";
+import { GlobalContext } from "@/context/GlobalContext";
 import { UploadButton } from "./uploadThing";
 import Image from "next/image";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { LuLoader2 } from "react-icons/lu";
 import { PiArticleMedium } from "react-icons/pi";
+import { useRouter } from "next/navigation";
+import { Toast } from "primereact/toast";
 
 const AddCourseForm = () => {
   const [image, setImage] = useState("");
@@ -17,6 +20,8 @@ const AddCourseForm = () => {
   const [teacher, setTeacher] = useState("");
   const [price, setPrice] = useState("");
   const [salePrice, setSalePrice] = useState("");
+  const { setLoading, toast }: any = useContext(GlobalContext);
+  const router = useRouter();
 
   const handleImageDelete = (image: string) => {
     setImageIsDeleting(true);
@@ -48,6 +53,7 @@ const AddCourseForm = () => {
   };
 
   const handleSave = (e: any) => {
+    setLoading(true);
     const data = {
       title: title,
       price: price,
@@ -66,16 +72,26 @@ const AddCourseForm = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
-          alert("Amjilttai");
+          setLoading(false);
+          router.push("/");
         } else {
-          alert("Aldaa garlaa");
+          setLoading(false);
+          toast.current.show({
+            severity: "error",
+            summary: "Error",
+            detail: "Алдаа гарлаа",
+            life: 3000,
+          });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false), console.log(err);
+      });
   };
 
   return (
     <>
+      <Toast ref={toast} />
       <h1 className="font-bold text-lg mb-10">Курс нэмэх</h1>
 
       <div className="w-full gap-20">
@@ -106,11 +122,20 @@ const AddCourseForm = () => {
                   setImage(res[0].url);
 
                   console.log("Files: ", res);
-                  alert("Upload Completed");
+                  toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: "Upload completed",
+                    life: 3000,
+                  });
                 }}
                 onUploadError={(error: Error) => {
-                  // Do something with the error.
-                  alert(`ERROR! ${error.message}`);
+                  toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: "Алдаа гарлаа",
+                    life: 3000,
+                  });
                 }}
               />
             </>

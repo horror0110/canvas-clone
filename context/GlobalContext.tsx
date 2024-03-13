@@ -18,6 +18,7 @@ export const GlobalProvider: React.FC<GlobalContextProps> = ({ children }) => {
 
   const initialCart = storedCart ? JSON.parse(storedCart) : [];
   const [cart, setCart] = useState(initialCart);
+  const [loading , setLoading] = useState(false)
 
   const toast: any = useRef(null);
 
@@ -68,6 +69,8 @@ export const GlobalProvider: React.FC<GlobalContextProps> = ({ children }) => {
         handleCart,
         calculateTotalPrice,
         toast,
+        loading,
+        setLoading
       }}
     >
       {children}

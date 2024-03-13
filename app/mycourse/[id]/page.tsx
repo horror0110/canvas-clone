@@ -2,10 +2,6 @@
 
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
-import { CiVideoOn } from "react-icons/ci";
-import { IoTimeOutline } from "react-icons/io5";
-import { TbPlayerPlayFilled } from "react-icons/tb";
-import { PiStudent } from "react-icons/pi";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
@@ -18,13 +14,18 @@ const MyCoursePage = ({ params }: any) => {
 
   const router = useRouter();
 
-  const { toast }: any = useContext(GlobalContext);
+  const { toast, setLoading }: any = useContext(GlobalContext);
 
   useEffect(() => {
+    setLoading(true);
     fetch(`/api/mycourse/${params.id}`)
       .then((response) => response.json())
-      .then((data) => setCourses(data.data))
-      .catch((err) => console.log(err));
+      .then((data) => {
+        setLoading(false), setCourses(data.data);
+      })
+      .catch((err) => {
+        setLoading(true), console.log(err);
+      });
   }, [params.id]);
 
   if (courses.length === 0) {

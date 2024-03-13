@@ -12,10 +12,12 @@ import { useRouter } from "next/navigation";
 import { IoBookOutline } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { useUser } from "@clerk/clerk-react";
+import Loader from "./components/Loader";
+import { PacmanLoader } from "react-spinners";
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
-  const { handleCart, toast }: any = useContext(GlobalContext);
+  const { handleCart, toast, setLoading }: any = useContext(GlobalContext);
 
   const [header, setHeader] = useState("");
 
@@ -26,6 +28,7 @@ const Home = () => {
   const [admin, setAdmin] = useState(false);
   const router = useRouter();
   const { user }: any = useUser();
+  const [smallLoading, setSmallLoading] = useState(false);
 
   useEffect(() => {
     const body = {
@@ -67,14 +70,27 @@ const Home = () => {
   }, [admin]);
 
   useEffect(() => {
+    setLoading(true);
+
     fetch("/api/courses", {
       method: "GET",
       headers: { "content-type": "application/json" },
     })
-      .then((response) => response.json())
-      .then((data) => setCourses(data.data))
-      .catch((err) => console.log(err));
-  }, [courses]);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch courses");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setLoading(false);
+        setCourses(data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching courses:", error);
+        setLoading(false);
+      });
+  }, []);
 
   const handleAdd = (id: any, name: string) => {
     setVisible(true);
@@ -84,6 +100,7 @@ const Home = () => {
   };
 
   const handleSave = () => {
+    setSmallLoading(true);
     const body = {
       title: "video1",
       url: video,
@@ -98,6 +115,7 @@ const Home = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.data) {
+          setSmallLoading(false);
           toast.current.show({
             severity: "success",
             summary: "Success",
@@ -108,7 +126,9 @@ const Home = () => {
           setVisible(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setSmallLoading(false), console.log(err);
+      });
   };
 
   return (
@@ -206,16 +226,22 @@ const Home = () => {
         <UploadButton
           endpoint="pdfUploader"
           onClientUploadComplete={(res: any) => {
-            console.log("Files: ", res);
-            alert("Upload Completed");
+            toast.current.show({
+              severity: "success",
+              summary: "Success",
+              detail: "Upload completed",
+              life: 3000,
+            });
           }}
           onUploadError={(error: Error) => {
             // Do something with the error.
             alert(`ERROR! ${error.message}`);
           }}
         />
-
-        <Button label="Хадгалах" onClick={handleSave} />
+        <div className="bg-mainColor flex items-center gap-1 text-white w-max rounded-md px-4 py-1">
+          <Button label=" Хадгалах" onClick={handleSave} />
+          {smallLoading && <PacmanLoader color="#36d7b7" size={10} />}
+        </div>
       </Dialog>
     </Container>
   );

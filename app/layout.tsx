@@ -5,6 +5,7 @@ import Sidebar from "./components/Sidebar";
 import { ClerkProvider } from "@clerk/nextjs";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { GlobalProvider } from "@/context/GlobalContext";
+import Loader from "./components/Loader";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <body className={montserrat.className}>
             <div className="flex gap-10">
               <Sidebar />
+              <Loader/>
               {children}
             </div>
           </body>
