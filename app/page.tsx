@@ -14,6 +14,7 @@ import { IoMdAdd } from "react-icons/io";
 import { useUser } from "@clerk/clerk-react";
 import Loader from "./components/Loader";
 import { PacmanLoader } from "react-spinners";
+import Link from "next/link";
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
@@ -158,7 +159,10 @@ const Home = () => {
               </div>
             )}
 
-            <div className="w-full h-[150px] relative">
+            <div
+              onClick={() => router.push(`/course/${course.id}`)}
+              className="w-full h-[150px] relative "
+            >
               <Image
                 alt="course"
                 src={course.image}
