@@ -1911,6 +1911,11 @@ thenify-all@^1.0.0:
   dependencies:
     any-promise "^1.0.0"
 
+thousandify@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/thousandify/-/thousandify-1.0.3.tgz#a5f3be2ae4e0e684a409158acb14e073bd73f402"
+  integrity sha512-//+4pzhoUBs/y/OAaUFRMx98LxgGDSAVPzzmrc1yyH2N4DQkfAaOfnmPKC6TUOrOcI0BV9r9bu9w5kssgMhCKA==
+
 tiny-warning@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"

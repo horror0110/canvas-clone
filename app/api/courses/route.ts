@@ -18,7 +18,11 @@ export const POST = async (req: Request) => {
 };
 export const GET = async (req: Request) => {
   try {
-    const courses = await prisma.course.findMany();
+    const courses = await prisma.course.findMany({
+      include: {
+        videos: true,
+      },
+    });
 
     return NextResponse.json({ data: courses });
   } catch (err) {

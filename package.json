@@ -27,6 +27,7 @@
     "react-player": "^2.15.1",
     "react-spinners": "^0.13.8",
     "stripe": "^14.19.0",
+    "thousandify": "^1.0.3",
     "uploadthing": "^6.4.1"
   },
   "devDependencies": {

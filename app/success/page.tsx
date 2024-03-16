@@ -2,18 +2,21 @@
 import { GlobalContext } from "@/context/GlobalContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
-import Confetti from "react-confetti";
+import Confetti from 'react-confetti'
 
 const SuccessPage = () => {
   const searchParams = useSearchParams();
 
   const { cart, calculateTotalPrice, setCart }: any = useContext(GlobalContext);
 
+  const [isExploding, setIsExploding] = React.useState(false);
+
   const router = useRouter();
 
   const isSuccess = searchParams.get("redirect_status");
 
   useEffect(() => {
+    setIsExploding(true);
     if (isSuccess === "succeeded") {
       const body = {
         products: cart,
@@ -25,18 +28,7 @@ const SuccessPage = () => {
           body: JSON.stringify(body),
         })
           .then((response) => response.json())
-          .then((data: any) => {
-            // if (data.data) {
-            //   setTimeout(() => {
-            //     router.push("/orders");
-            //   }, 5000);
-            //   setCart("");
-
-            //   localStorage.removeItem("cart");
-            // }
-
-            console.log(data);
-          });
+          .then((data: any) => {});
       } catch (err) {
         console.log(err);
       }
@@ -77,13 +69,9 @@ const SuccessPage = () => {
 
   return (
     <>
-      
       <div className="flex items-center justify-center mx-auto text-center text-2xl text-green-700">
-      <Confetti />
-        <p>
-          Payment successful. You are being redirected to the orders page.
-          Please do not close the page.
-        </p>
+        {isExploding && <Confetti />}
+        <p>Таны сургалт амжилттай идэвхижлээ.</p>
       </div>
     </>
   );

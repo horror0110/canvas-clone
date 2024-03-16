@@ -13,6 +13,7 @@ import Image from "next/image";
 import { Button } from "primereact/button";
 import { useUser } from "@clerk/clerk-react";
 import { useRouter } from "next/navigation";
+const thousandify = require("thousandify");
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -75,7 +76,7 @@ const CheckoutForm = () => {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "https://1234-clone.vercel.app/success",
+        return_url: "http://localhost:3000/success",
       },
     });
 
@@ -111,7 +112,7 @@ const CheckoutForm = () => {
 
             <div>
               <h1>{course.title}</h1>
-              <span>{course.price}</span>
+              <span>{thousandify(course.price)}</span>
             </div>
 
             <Button label="Устах" />
@@ -120,7 +121,7 @@ const CheckoutForm = () => {
       </div>
 
       <h1 className="font-semibold text-lg mb-5 mt-10">
-        Total Price: {calculateTotalPrice()}
+        Total Price: {thousandify(calculateTotalPrice())}
       </h1>
 
       <form id="payment-form" className="  flex flex-col gap-8 ">

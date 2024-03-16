@@ -16,6 +16,7 @@ import Loader from "./components/Loader";
 import { PacmanLoader } from "react-spinners";
 import Link from "next/link";
 import { InputText } from "primereact/inputtext";
+const thousandify = require("thousandify");
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
@@ -178,14 +179,16 @@ const Home = () => {
             </h1>
             <div className="flex flex-col gap-2 text-[13px] ">
               <div className="flex items-center justify-between">
-                <span className="flex gap-1 items-center text-gray-500">
-                  <IoBookOutline color="#008080" size={15} />
-                  10ш видео хичээл
-                </span>
+                {course.videos && (
+                  <span className="flex gap-1 items-center text-gray-500">
+                    <IoBookOutline color="#008080" size={15} />
+                    {course.videos.length} видео хичээл
+                  </span>
+                )}
               </div>
 
               <span className="font-bold text-md text-start ">
-                {course.price}
+                {thousandify(course.price)}₮
               </span>
 
               {course.ownerStudents.some((el: any) => el === user?.id) ? (

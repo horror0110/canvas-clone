@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+const thousandify = require("thousandify")
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -21,6 +22,10 @@ const OrdersPage = () => {
     });
 
     return data;
+  };
+
+  const priceBodyTemplate: any = (rowData: any) => {
+    return thousandify(rowData.price);
   };
   return (
     <div className="card">
@@ -44,6 +49,7 @@ const OrdersPage = () => {
           style={{ width: "40%" }}
         ></Column>
         <Column
+          body={priceBodyTemplate}
           field="price"
           header="Total price"
           style={{ width: "10%" }}
