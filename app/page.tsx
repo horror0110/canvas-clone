@@ -15,6 +15,7 @@ import { useUser } from "@clerk/clerk-react";
 import Loader from "./components/Loader";
 import { PacmanLoader } from "react-spinners";
 import Link from "next/link";
+import { InputText } from "primereact/inputtext";
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
@@ -30,6 +31,7 @@ const Home = () => {
   const router = useRouter();
   const { user }: any = useUser();
   const [smallLoading, setSmallLoading] = useState(false);
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     const body = {
@@ -103,7 +105,7 @@ const Home = () => {
   const handleSave = () => {
     setSmallLoading(true);
     const body = {
-      title: "video1",
+      title: title,
       url: video,
       courseId: getId,
     };
@@ -210,6 +212,13 @@ const Home = () => {
         style={{ width: "50vw" }}
         onHide={() => setVisible(false)}
       >
+        <label htmlFor="username">Сургалтын нэр</label>
+        <InputText
+          onChange={(e) => setTitle(e.target.value)}
+          id="username"
+          aria-describedby="username-help"
+          className="border border-gray-500 "
+        />
         <UploadButton
           endpoint="videoUploader"
           onClientUploadComplete={(res: any) => {

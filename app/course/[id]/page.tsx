@@ -59,6 +59,7 @@ const CourseDetailPage = ({ params }: any) => {
               onClick={() => handleCart(course)}
               className="bg-mainColor  text-white p-2 mt-2 text-xs"
               label="Сагсанд хийх"
+              
             />
           )}
         </div>
