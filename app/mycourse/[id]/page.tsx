@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import Container from "@/app/components/Container";
 import { GlobalContext } from "@/context/GlobalContext";
 import { IoBookOutline } from "react-icons/io5";
+import { useUser } from "@clerk/nextjs";
 
 const MyCoursePage = ({ params }: any) => {
   const [courses, setCourses] = useState([]);
@@ -15,6 +16,16 @@ const MyCoursePage = ({ params }: any) => {
   const router = useRouter();
 
   const { toast, setLoading }: any = useContext(GlobalContext);
+
+  const { user }: any = useUser();
+
+  useEffect(() => {
+    if (params.id !== user?.id) {
+      router.push("/sign-in");
+    }
+  }, [user?.id]);
+
+  console.log(user?.id);
 
   useEffect(() => {
     setLoading(true);

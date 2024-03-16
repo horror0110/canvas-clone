@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-const thousandify = require("thousandify")
+const thousandify = require("thousandify");
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);

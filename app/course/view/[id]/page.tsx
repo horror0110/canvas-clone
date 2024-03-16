@@ -1,4 +1,6 @@
 "use client";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 
@@ -7,6 +9,10 @@ const ViewCoursePage = ({ params }: any) => {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const router = useRouter();
+
+  const { user } = useUser();
 
   useEffect(() => {
     fetch(`/api/courses/${params.id}`)
@@ -18,6 +24,12 @@ const ViewCoursePage = ({ params }: any) => {
       })
       .catch((err) => console.log(err));
   }, [params.id, currentIndex]);
+
+  useEffect(() => {
+    if (user && courses.ownerStudents && !courses.ownerStudents.some((el: any) => el === user.id)) {
+      router.push("/sign-in");
+    }
+  }, [user, courses]);
 
   const handleNext = () => {
     if (currentIndex < courses.videos.length - 1) {

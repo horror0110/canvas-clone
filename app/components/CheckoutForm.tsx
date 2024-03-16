@@ -21,7 +21,7 @@ const CheckoutForm = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { cart, calculateTotalPrice }: any = useContext(GlobalContext);
+  const { cart, calculateTotalPrice, setCart }: any = useContext(GlobalContext);
 
   const { isSignedIn, user, isLoaded } = useUser();
 
@@ -89,6 +89,16 @@ const CheckoutForm = () => {
     setIsLoading(false);
   };
 
+  const handleDelete = (id: any) => {
+    const test = cart.filter((el: any) => {
+      return el.id !== id;
+    });
+
+    setCart(test);
+
+    localStorage.setItem("cart", JSON.stringify(test));
+  };
+
   if (cart.length === 0) {
     return <div>Сагс хоосон байна..</div>;
   }
@@ -115,7 +125,7 @@ const CheckoutForm = () => {
               <span>{thousandify(course.price)}</span>
             </div>
 
-            <Button label="Устах" />
+            <Button onClick={() => handleDelete(course.id)} label="Устах" />
           </div>
         ))}
       </div>

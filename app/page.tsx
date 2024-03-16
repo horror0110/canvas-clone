@@ -215,45 +215,49 @@ const Home = () => {
         style={{ width: "50vw" }}
         onHide={() => setVisible(false)}
       >
-        <label htmlFor="username">Сургалтын нэр</label>
-        <InputText
-          onChange={(e) => setTitle(e.target.value)}
-          id="username"
-          aria-describedby="username-help"
-          className="border border-gray-500 "
-        />
-        <UploadButton
-          endpoint="videoUploader"
-          onClientUploadComplete={(res: any) => {
-            console.log("Files: ", res);
-            setVideo(res[0].url);
-            toast.current.show({
-              severity: "success",
-              summary: "Success",
-              detail: "Upload completed",
-              life: 3000,
-            });
-          }}
-          onUploadError={(error: Error) => {
-            // Do something with the error.
-            alert(`ERROR! ${error.message}`);
-          }}
-        />
-        <UploadButton
-          endpoint="pdfUploader"
-          onClientUploadComplete={(res: any) => {
-            toast.current.show({
-              severity: "success",
-              summary: "Success",
-              detail: "Upload completed",
-              life: 3000,
-            });
-          }}
-          onUploadError={(error: Error) => {
-            // Do something with the error.
-            alert(`ERROR! ${error.message}`);
-          }}
-        />
+        <div className="flex flex-col gap-2 items-center">
+          <label htmlFor="username">Видеоны нэр</label>
+          <InputText
+            onChange={(e) => setTitle(e.target.value)}
+            id="username"
+            aria-describedby="username-help"
+            className="border border-gray-500 my-2 "
+          />
+
+          <UploadButton
+            endpoint="videoUploader"
+            onClientUploadComplete={(res: any) => {
+              console.log("Files: ", res);
+              setVideo(res[0].url);
+              toast.current.show({
+                severity: "success",
+                summary: "Success",
+                detail: "Upload completed",
+                life: 3000,
+              });
+            }}
+            onUploadError={(error: Error) => {
+              // Do something with the error.
+              alert(`ERROR! ${error.message}`);
+            }}
+          />
+          <UploadButton
+            endpoint="pdfUploader"
+            onClientUploadComplete={(res: any) => {
+              toast.current.show({
+                severity: "success",
+                summary: "Success",
+                detail: "Upload completed",
+                life: 3000,
+              });
+            }}
+            onUploadError={(error: Error) => {
+              // Do something with the error.
+              alert(`ERROR! ${error.message}`);
+            }}
+          />
+        </div>
+
         <div className="bg-mainColor flex items-center gap-1 text-white w-max rounded-md px-4 py-1">
           <Button label=" Хадгалах" onClick={handleSave} />
           {smallLoading && <PacmanLoader color="#36d7b7" size={10} />}
