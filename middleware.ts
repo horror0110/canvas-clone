@@ -12,6 +12,7 @@ export default authMiddleware({
     "/",
     "/cart",
     "/api/create-payment-intent",
+    "/course/:id"
   ],
 });
 
