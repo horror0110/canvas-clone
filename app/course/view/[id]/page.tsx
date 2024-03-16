@@ -3,6 +3,7 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
+import { FaChalkboardTeacher } from "react-icons/fa";
 
 const ViewCoursePage = ({ params }: any) => {
   const [courses, setCourses] = useState<any>({ videos: [] });
@@ -26,7 +27,11 @@ const ViewCoursePage = ({ params }: any) => {
   }, [params.id, currentIndex]);
 
   useEffect(() => {
-    if (user && courses.ownerStudents && !courses.ownerStudents.some((el: any) => el === user.id)) {
+    if (
+      user &&
+      courses.ownerStudents &&
+      !courses.ownerStudents.some((el: any) => el === user.id)
+    ) {
       router.push("/sign-in");
     }
   }, [user, courses]);
@@ -44,15 +49,15 @@ const ViewCoursePage = ({ params }: any) => {
   };
 
   return (
-    <div>
+    <div className="">
       <h1 className="my-5 font-bold text-2xl">
         {courses.title} сургалтанд тавтай морил!{" "}
       </h1>
 
       <h1 className="my-10 font-semibold text-lg">Хичээлүүд</h1>
 
-      <div className="flex flex-col md:flex-row gap-10">
-        <div className="flex flex-col gap-5">
+      <div className="flex flex-col md:flex-row gap-5">
+        <div className="flex flex-col gap-5 w-full md:w-[50%]">
           <div className="">
             <ReactPlayer
               width="500px"
@@ -63,9 +68,14 @@ const ViewCoursePage = ({ params }: any) => {
               pip={true}
             />
 
-            <h1>{title}</h1>
+            <h1 className="font-semibold my-2">{title}</h1>
 
-            <span>{courses.teacher}</span>
+            <span className="flex items-center gap-1">
+              <FaChalkboardTeacher />{" "}
+              <span className="text-gray-500 text-[14px]">
+                {courses.teacher}
+              </span>
+            </span>
           </div>
           <div className="my-5 flex items-center justify-between gap-2">
             <button
@@ -85,14 +95,14 @@ const ViewCoursePage = ({ params }: any) => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 md:w-[50%] w-full">
           {courses.videos &&
             courses.videos.map((video: any, index: number) => (
               <div className="" key={index}>
                 <h1
                   className={`cursor-pointer flex items-center gap-2 ${
                     video.url === url
-                      ? "bg-blue-600 p-2 rounded-md text-white"
+                      ? "bg-blue-600 p-2 rounded-md text-white w-full"
                       : ""
                   }`}
                   onClick={() => {

@@ -7,20 +7,27 @@ import { Toast } from "primereact/toast";
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/clerk-react";
+const thousandify = require("thousandify");
 
 const CourseDetailPage = ({ params }: any) => {
   const [course, setCourse] = useState<any>([]);
 
-  const { handleCart, toast }: any = useContext(GlobalContext);
+  const { handleCart, toast, setLoading, loading }: any =
+    useContext(GlobalContext);
 
   const router = useRouter();
   const { user }: any = useUser();
 
   useEffect(() => {
+    setLoading(true);
     fetch(`/api/courses/${params.id}`)
       .then((response) => response.json())
-      .then((data) => setCourse(data.data))
-      .catch((err) => console.log(err));
+      .then((data) => {
+        setLoading(false), setCourse(data.data);
+      })
+      .catch((err) => {
+        setLoading(false), console.log(err);
+      });
   }, [params.id]);
 
   return (
@@ -30,8 +37,8 @@ const CourseDetailPage = ({ params }: any) => {
         {course.title}
       </h1>
 
-      <div className="flex  gap-5 w-screen">
-        <div className="w-[30%] flex flex-col gap-3">
+      <div className="flex flex-col md:flex-row  gap-5 w-screen">
+        <div className="md:w-[30%]  flex flex-col gap-3">
           <div className="relative w-full h-[300px]">
             <Image src={course.image} alt="" fill className="object-cover" />
           </div>
@@ -41,14 +48,15 @@ const CourseDetailPage = ({ params }: any) => {
             Багш <span className="text-mainColor">{course.teacher}</span>
           </span>
 
-          <span>{course.price}</span>
+          <span>{thousandify(course.price)}</span>
 
           <p className="text-green-700 my-2">
             Та зөвхөн өнөөдөр бүртгүүлснээр энэ сургалтыг 49,000₮ болгож
             хямдруулж аваарай!
           </p>
 
-          {course.ownerStudents && course.ownerStudents.some((el: any) => el === user?.id) ? (
+          {course.ownerStudents &&
+          course.ownerStudents.some((el: any) => el === user?.id) ? (
             <Button
               className="bg-mainColor  text-white p-2 mt-2 text-xs"
               label="Сургалтаа үзэх"
@@ -59,12 +67,11 @@ const CourseDetailPage = ({ params }: any) => {
               onClick={() => handleCart(course)}
               className="bg-mainColor  text-white p-2 mt-2 text-xs"
               label="Сагсанд хийх"
-              
             />
           )}
         </div>
 
-        <div className="w-[70%]">
+        <div className="md:w-[70%]">
           <h1 className="text-green-800">
             Бүх сургалт ХУГАЦААГҮЙ буюу НАСАН ТУРШИЙН!
           </h1>
