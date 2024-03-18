@@ -8,7 +8,7 @@ import { GlobalContext } from "@/context/GlobalContext";
 import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
 import { UploadButton } from "./components/uploadThing";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { IoBookOutline } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { useUser } from "@clerk/clerk-react";
@@ -16,6 +16,7 @@ import Loader from "./components/Loader";
 import { PacmanLoader } from "react-spinners";
 import Link from "next/link";
 import { InputText } from "primereact/inputtext";
+import Filter from "./components/Filter";
 const thousandify = require("thousandify");
 
 const Home = () => {
@@ -33,6 +34,23 @@ const Home = () => {
   const { user }: any = useUser();
   const [smallLoading, setSmallLoading] = useState(false);
   const [title, setTitle] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const data = [
+    { name: "Хамгийн сүүлд нэмэгдсэн", code: "?date=desc" },
+    { name: "Хамгийн их борлуулалттай", code: "?sale=desc" },
+    { name: "Үнэ өсөхөөр", code: "?price=asc" },
+    { name: "Үнэ буурахаар", code: "?price=desc" },
+  ];
+  const searchParams = useSearchParams();
+
+  const priceType = searchParams.get("price");
+  const saleType = searchParams.get("sale");
+  const dateType = searchParams.get("date");
+
+  const handleChange = (e: any) => {
+    setSelectedFilter(e.value);
+    router.push(e.value.code);
+  };
 
   useEffect(() => {
     const body = {
@@ -76,25 +94,34 @@ const Home = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch("/api/courses", {
-      method: "GET",
-      headers: { "content-type": "application/json" },
-    })
-      .then((response) => {
+    // Fetching courses based on query parameters
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch(
+          `/api/courses${
+            priceType
+              ? `?price=${priceType}`
+              : saleType
+              ? `?sale=${saleType}`
+              : dateType
+              ? `?date=${dateType}`
+              : ""
+          }`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch courses");
         }
-        return response.json();
-      })
-      .then((data) => {
-        setLoading(false);
+        const data = await response.json();
         setCourses(data.data);
-      })
-      .catch((error) => {
+        setLoading(false);
+      } catch (error) {
         console.error("Error fetching courses:", error);
         setLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    fetchCourses();
+  }, [priceType, saleType, dateType, setLoading]);
 
   const handleAdd = (id: any, name: string) => {
     setVisible(true);
@@ -138,6 +165,12 @@ const Home = () => {
   return (
     <Container>
       <h1 className="text-lg my-10 font-bold text-cyan-700">Бүх сургалтууд</h1>
+      <Filter
+        data={data}
+        selectedFilter={selectedFilter}
+        setSelectedFilter={setSelectedFilter}
+        handleChange={handleChange}
+      />
       <Toast ref={toast} />
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5  gap-y-10">
         {courses.map((course: any, index) => (

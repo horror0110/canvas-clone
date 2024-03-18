@@ -19,7 +19,6 @@ const AddCourseForm = () => {
   const [description, setDescription] = useState("");
   const [teacher, setTeacher] = useState("");
   const [price, setPrice] = useState("");
-  const [salePrice, setSalePrice] = useState("");
   const { setLoading, toast }: any = useContext(GlobalContext);
   const router = useRouter();
 
@@ -56,8 +55,7 @@ const AddCourseForm = () => {
     setLoading(true);
     const data = {
       title: title,
-      price: price,
-      salePrice: salePrice,
+      price: parseInt(price),
       description: description,
       teacher: teacher,
       image: image,
@@ -169,16 +167,7 @@ const AddCourseForm = () => {
               className="border border-gray-500 "
             />
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="username">Сургалтын хямдарсан үнэ</label>
-            <InputText
-              onChange={(e) => setSalePrice(e.target.value)}
-              type="text"
-              id="username"
-              aria-describedby="username-help"
-              className="border border-gray-500 "
-            />
-          </div>
+
           <div className="flex flex-col gap-2">
             <label htmlFor="username">Сургалтыг заах багш</label>
             <InputText

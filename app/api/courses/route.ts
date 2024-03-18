@@ -17,8 +17,28 @@ export const POST = async (req: Request) => {
   }
 };
 export const GET = async (req: Request) => {
+  const { searchParams } = new URL(req.url);
+
+  const priceFilterType: any = searchParams.get("price");
+  const dateFilterType: any = searchParams.get("date");
+  const ownerStudentsCount: any = searchParams.get("sale");
+
   try {
-    const courses = await prisma.course.findMany({
+    let orderBy: any[] = [];
+
+    // Apply sorting based on query parameters
+    if (searchParams.has("price")) {
+      orderBy.push({ price: priceFilterType });
+    }
+    if (searchParams.has("date")) {
+      orderBy.push({ createdAt: dateFilterType });
+    }
+    if (searchParams.has("sale")) {
+      orderBy.push({ studentCount: ownerStudentsCount });
+    }
+
+    const courses: any = await prisma.course.findMany({
+      orderBy: orderBy,
       include: {
         videos: true,
       },
@@ -46,6 +66,9 @@ export const PUT = async (req: NextRequest) => {
       data: {
         ownerStudents: {
           push: userId,
+        },
+        studentCount: {
+          increment: 1,
         },
       },
     });

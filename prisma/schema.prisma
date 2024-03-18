@@ -109,13 +109,13 @@ model Family {
 
 model Course {
   id            String   @id @default(cuid()) @map("_id")
+  createdAt     DateTime @default(now())
   ownerStudents String[]
   title         String
-  salePrice     String
-  price         String
+  price         Int
   description   String
   videos        Video[]
-  studentCount  String?
+  studentCount  Int      @default(0)
   videoCount    String?
   views         String?
   timeLength    String?
