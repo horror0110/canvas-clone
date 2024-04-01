@@ -11,6 +11,7 @@ import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import Link from "next/link";
 import { checkRole } from "@/utils/roles";
 import { CiLogin } from "react-icons/ci";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 const Sidebar = () => {
   const isAdmin = checkRole("admin");
@@ -92,6 +93,15 @@ const Sidebar = () => {
                   className="cursor-pointer student"
                 />
               </Link>
+
+              <Link href="/messenger">
+                <FaFacebookMessenger
+                  data-pr-tooltip="Тусламж чат"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer teacher"
+                />
+              </Link>
             </div>
           )}
           {isTeacher && !isAdmin && (
@@ -117,6 +127,15 @@ const Sidebar = () => {
               <Link href="/">
                 <SiCoursera
                   data-pr-tooltip="Сургалтууд"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer student"
+                />
+              </Link>
+
+              <Link href="/cart">
+                <CiShoppingCart
+                  data-pr-tooltip="Сагс"
                   color="white"
                   size={25}
                   className="cursor-pointer student"
