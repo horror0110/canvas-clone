@@ -1,10 +1,38 @@
+"use client";
 import Image from "next/image";
-import Container from "../components/Container";
 import { RiImageAddFill } from "react-icons/ri";
 import { InputText } from "primereact/inputtext";
+import axios from "axios";
 
 import { IoMdSend } from "react-icons/io";
+import { useEffect, useState } from "react";
+import { pusherClient } from "@/libs/pusher";
+
+
+const channel = pusherClient.subscribe("chat");
 const Messenger = () => {
+  const [messages, setMessages] = useState<any>([]);
+  const [inputMessage, setInputMessage] = useState("");
+
+  useEffect(() => {
+    axios.get("/api/messenger").then((response) => {
+      setMessages(response.data);
+    });
+
+    channel.bind("message", (data: any) => {
+      setMessages((prevMessages: any) => [...prevMessages, data]);
+    });
+  }, []);
+
+  const sendMessage = async () => {
+    const response = await axios.post("/api/messenger", {
+      senderId: "user1",
+      text: inputMessage,
+    });
+
+    setMessages((prevMessages: any) => [...prevMessages, response.data]);
+    setInputMessage("");
+  };
   return (
     <div>
       <h1 className="font-bold text-xl m-20">Та асуух зүйлээ үлдээнэ үү</h1>
@@ -33,7 +61,7 @@ const Messenger = () => {
         </div>
 
         <div className="bg-gray-100 p-5 rounded-md w-full">
-          <div className="flex items-start gap-3">
+          {/* <div className="flex items-start gap-3">
             <Image
               alt="avatar"
               src="/images/avatar.png"
@@ -53,15 +81,25 @@ const Messenger = () => {
                 Are you excited too?
               </span>
             </div>
-          </div>
+          </div> */}
+
+          {messages.map((message: any) => (
+            <div key={message.id}>
+              <p>{message.text}</p>
+            </div>
+          ))}
           <div className="flex items-center justify-between mt-10 bg-white p-2">
             <div className="flex items-center gap-2 ">
               <RiImageAddFill size={30} color="gray" />
 
-              <InputText className="outline-none bg-transparent " />
+              <InputText
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                className="outline-none bg-transparent "
+              />
             </div>
             <div className="bg-mainColor rounded-full p-2">
-              <IoMdSend size={30} color="white" />
+              <IoMdSend onClick={sendMessage} size={30} color="white" />
             </div>
           </div>
         </div>
