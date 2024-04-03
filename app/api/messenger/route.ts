@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/libs/prismadb";
-import Pusher from "pusher";
+
 import { pusherServer } from "@/libs/pusher";
 
 
@@ -23,8 +23,8 @@ export const POST = async (req: NextRequest) => {
         senderId,
       },
     });
-    // Trigger Pusher event after saving the message
-    pusherServer.trigger("chat", "message", message);
+  
+   await pusherServer.trigger("chat", "new-message", message);
     return NextResponse.json(message);
   } catch (error) {
     console.error("Error creating message:", error);
