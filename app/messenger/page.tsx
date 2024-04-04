@@ -5,10 +5,15 @@ import axios from "axios";
 import Image from "next/image";
 import { IoMdSend } from "react-icons/io";
 import { InputText } from "primereact/inputtext";
+import { useUser } from "@clerk/nextjs";
 
 const Messenger = () => {
   const [messages, setMessages] = useState<any>([]);
   const [inputValue, setInputValue] = useState("");
+
+  const { user }: any = useUser();
+
+
 
   const list = [
     {
@@ -105,7 +110,7 @@ const Messenger = () => {
                   height={40}
                   alt="avatar"
                 />
-                <span>{message.senderId}</span>
+                <span>{user?.fullName}</span>
                 <span>10:50AM</span>
               </div>
 
