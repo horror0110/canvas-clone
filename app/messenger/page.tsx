@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { pusherClient } from "@/libs/pusher";
 import axios from "axios";
 import Image from "next/image";
@@ -69,6 +69,16 @@ const Messenger = () => {
     };
   }, []);
 
+    /* Scrolling down to the bottom when having the new message */
+
+    const bottomRef:any = useRef(null);
+
+    useEffect(() => {
+      bottomRef.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, [messages]);
+
   return (
     <div className="m-5 w-screen">
       <div className="flex gap-5 w-full ">
@@ -104,6 +114,7 @@ const Messenger = () => {
               </p>
             </div>
           ))}
+          <div ref={bottomRef} />
 
           <div className="bg-gray-200 flex items-center gap-3  rounded-md p-3  sticky bottom-0 left-0 w-full">
             <InputText
