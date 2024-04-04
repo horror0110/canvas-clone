@@ -146,4 +146,6 @@ model Message {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   senderId  String
+  userName String
+  userImage String
 }

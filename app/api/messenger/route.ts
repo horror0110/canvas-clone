@@ -16,19 +16,23 @@ export const GET = async (req: NextRequest) => {
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
 
-  const { message, chatId } = body;
+  const { message, userName, userImage } = body;
 
   try {
     const newMessage = await prisma.message.createMany({
       data: {
         text: message,
         senderId: "ganaa",
+        userName: userName,
+        userImage: userImage,
       },
     });
 
     const newMessageData = {
       text: message,
       senderId: "ganaa",
+      userName: userName,
+      userImage: userImage,
     };
 
     await pusherServer.trigger("ganaa", "new-message", newMessageData);
@@ -44,4 +48,10 @@ export const POST = async (req: NextRequest) => {
       { status: 500 }
     );
   }
+};
+
+export const DELETE = async (req: NextRequest) => {
+  await prisma.message.deleteMany();
+
+  return NextResponse.json({ success: "Deleted all message" });
 };

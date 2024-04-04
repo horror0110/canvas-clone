@@ -13,8 +13,6 @@ const Messenger = () => {
 
   const { user }: any = useUser();
 
-
-
   const list = [
     {
       image: "/images/avatar.png",
@@ -44,7 +42,8 @@ const Messenger = () => {
     try {
       await axios.post("/api/messenger", {
         message: inputValue,
-        chatId: "ganaa",
+        userName: user?.fullName,
+        userImage: user?.imageUrl,
       });
       setInputValue("");
     } catch (error) {
@@ -74,15 +73,15 @@ const Messenger = () => {
     };
   }, []);
 
-    /* Scrolling down to the bottom when having the new message */
+  /* Scrolling down to the bottom when having the new message */
 
-    const bottomRef:any = useRef(null);
+  const bottomRef: any = useRef(null);
 
-    useEffect(() => {
-      bottomRef.current?.scrollIntoView({
-        behavior: "smooth",
-      });
-    }, [messages]);
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages]);
 
   return (
     <div className="m-5 w-screen">
@@ -105,12 +104,12 @@ const Messenger = () => {
             <div key={index}>
               <div className="flex items-center gap-2">
                 <Image
-                  src="/images/avatar.png"
+                  src={message.userImage}
                   width={40}
                   height={40}
                   alt="avatar"
                 />
-                <span>{user?.fullName}</span>
+                <span>{message.userName}</span>
                 <span>10:50AM</span>
               </div>
 
