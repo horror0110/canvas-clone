@@ -16,23 +16,23 @@ export const GET = async (req: NextRequest) => {
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
 
-  const { message, userName, userImage } = body;
+  const { message, userName, userImage, chatId } = body;
 
   try {
     const newMessage = await prisma.message.createMany({
       data: {
         text: message,
-        senderId: "ganaa",
         userName: userName,
         userImage: userImage,
+        chatId: chatId,
       },
     });
 
     const newMessageData = {
       text: message,
-      senderId: "ganaa",
       userName: userName,
       userImage: userImage,
+      chatId: chatId,
     };
 
     await pusherServer.trigger("ganaa", "new-message", newMessageData);

@@ -13,7 +13,9 @@ export default authMiddleware({
     "/cart",
     "/api/create-payment-intent",
     "/course/:id",
-    "/api/messenger"
+    "/api/messenger",
+    "/api/chat",
+    "/api/chat/:id"
   ],
 });
 
