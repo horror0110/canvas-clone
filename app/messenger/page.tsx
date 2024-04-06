@@ -6,11 +6,12 @@ import { useUser } from "@clerk/nextjs";
 const Messenger = () => {
   const [loading, setLoading] = useState(false);
   const [successChat, setSuccessChat] = useState(false);
+  const [chatCreated, setChatCreated] = useState(false);
   const { user } = useUser();
 
   useEffect(() => {
     if (!loading && !successChat) {
-      setLoading(true); // Set loading to true before sending request
+      setLoading(true);
 
       fetch("/api/checkchat", {
         method: "POST",
@@ -22,7 +23,6 @@ const Messenger = () => {
         .then((response) => response.json())
         .then((data) => {
           setLoading(false);
-          console.log(data); // Set loading back to false after receiving response
 
           if (data.success) {
             console.log("success");
@@ -33,13 +33,11 @@ const Messenger = () => {
         })
         .catch((err) => {
           console.log(err);
-          setLoading(false); // Set loading back to false if request fails
+          setLoading(false);
         });
     }
-  }, [user?.id, loading, successChat]); // Add successChat as a dependency
 
-  useEffect(() => {
-    if (successChat) {
+    if (successChat && !chatCreated) {
       fetch("/api/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -58,13 +56,14 @@ const Messenger = () => {
         .then((data) => {
           if (data.success) {
             console.log("added chat");
+            setChatCreated(true);
           }
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [successChat]);
+  }, [user?.id, loading, successChat, chatCreated]);
 
   return (
     <div className="m-5 w-screen">
