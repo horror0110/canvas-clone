@@ -1,36 +1,43 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-
+import { useEffect, useState } from "react";
 import ChatList from "../components/ChatList";
 import { useUser } from "@clerk/nextjs";
 
 const Messenger = () => {
-  const [successChat, setSuccessChat] = useState<any>(false);
-
+  const [loading, setLoading] = useState(false);
+  const [successChat, setSuccessChat] = useState(false);
   const { user } = useUser();
 
   useEffect(() => {
-    fetch("/api/checkchat", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        userId: user?.id, // Changed to user.id
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-           console.log("success")
-          setSuccessChat(true);
-        } else if (data.error) {
-          console.log("error")
-          setSuccessChat(false);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    if (!loading && !successChat) {
+      setLoading(true); // Set loading to true before sending request
 
-  console.log(successChat)
+      fetch("/api/checkchat", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          userId: user?.id,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setLoading(false);
+          console.log(data); // Set loading back to false after receiving response
+
+          if (data.success) {
+            console.log("success");
+            setSuccessChat(true);
+          } else {
+            console.log("error");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false); // Set loading back to false if request fails
+        });
+    }
+  }, [user?.id, loading, successChat]); // Add successChat as a dependency
+
   useEffect(() => {
     if (successChat) {
       fetch("/api/chat", {
@@ -50,13 +57,14 @@ const Messenger = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
-            console.log("added chat")
-           
+            console.log("added chat");
           }
         })
-        .catch((err) =>  {console.log(err) , setSuccessChat(false) });
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }, []);
+  }, [successChat]);
 
   return (
     <div className="m-5 w-screen">
