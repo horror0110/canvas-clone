@@ -15,7 +15,8 @@ export default authMiddleware({
     "/course/:id",
     "/api/messenger",
     "/api/chat",
-    "/api/chat/:id"
+    "/api/chat/:id",
+    "/api/checkchat"
   ],
 });
 

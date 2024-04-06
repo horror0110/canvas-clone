@@ -5,13 +5,15 @@ import { NextRequest, NextResponse } from "next/server";
 export const PUT = async (req: NextRequest) => {
   const { userId } = await req.json();
 
-  const chats:any = await prisma.chat.findMany({
+  const chats: any = await prisma.chat.findMany({
     include: {
       messages: true,
     },
   });
 
-  const filteredChats = chats.filter((chat:any) => chat.members.some((member:any) => member.id === userId));
+  const filteredChats = chats.filter((chat: any) =>
+    chat.members.some((member: any) => member.id === userId)
+  );
 
   return NextResponse.json({ data: filteredChats });
 };
@@ -20,7 +22,6 @@ export const POST = async (req: NextRequest) => {
   const { members } = await req.json();
 
   const user: any = await currentUser();
-
 
   const newMembers = [
     {
@@ -48,4 +49,10 @@ export const DELETE = async (req: NextRequest) => {
   await prisma.chat.deleteMany();
 
   return NextResponse.json({ success: "Deleted all chat" });
+};
+
+export const GET = async (req: NextRequest) => {
+  const chats = await prisma.chat.findMany();
+
+  return NextResponse.json({ data: chats });
 };

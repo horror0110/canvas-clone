@@ -16,16 +16,6 @@ const SingleChatPage = ({ params }: any) => {
 
   const { user }: any = useUser();
 
-  useEffect(() => {
-    fetch(`/api/chat/${params.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setChat(data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [params.id]);
 
   useEffect(() => {
     fetch(`/api/chat/${params.id}`, {
