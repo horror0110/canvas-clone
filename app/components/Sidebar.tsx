@@ -180,6 +180,15 @@ const Sidebar = () => {
                   className="cursor-pointer student"
                 />
               </Link>
+
+              <Link href="/messenger">
+                <FaFacebookMessenger
+                  data-pr-tooltip="Тусламж чат"
+                  color="white"
+                  size={25}
+                  className="cursor-pointer teacher"
+                />
+              </Link>
             </div>
           )}
         </div>
