@@ -65,7 +65,7 @@ const Messenger = () => {
           console.log(err);
         });
     }
-  }, [user?.id, loading, successChat, chatCreated]);
+  }, [user?.id, loading, successChat, chatCreated , isAdmin]);
 
   return (
     <div className="m-5 w-screen">
