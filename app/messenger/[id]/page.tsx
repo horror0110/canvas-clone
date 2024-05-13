@@ -17,6 +17,7 @@ const SingleChatPage = ({ params }: any) => {
   const { user }: any = useUser();
 
 
+
   useEffect(() => {
     fetch(`/api/chat/${params.id}`, {
       method: "GET",
@@ -80,7 +81,7 @@ const SingleChatPage = ({ params }: any) => {
   return (
     <div className="flex gap-10 w-screen m-5">
       <div className="w-[30%]">
-        <ChatList />
+        <ChatList admin="user_2d2dgGmgCc23Uapqt9u86GgmdsO" currentUser={user?.id} />
       </div>
 
       <div className="w-[70%] max-h-[600px] overflow-y-scroll">
