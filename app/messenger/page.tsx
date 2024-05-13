@@ -9,6 +9,8 @@ const Messenger = () => {
   const [chatCreated, setChatCreated] = useState(false);
   const { user } = useUser();
 
+  const isAdmin = user?.id === "user_2d2dgGmgCc23Uapqt9u86GgmdsO";
+
   useEffect(() => {
     if (!loading && !successChat) {
       setLoading(true);
@@ -37,7 +39,7 @@ const Messenger = () => {
         });
     }
 
-    if (successChat && !chatCreated) {
+    if (successChat && !chatCreated && !isAdmin) {
       fetch("/api/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -68,7 +70,7 @@ const Messenger = () => {
   return (
     <div className="m-5 w-screen">
       <div className="">
-        <ChatList />
+        <ChatList admin="user_2d2dgGmgCc23Uapqt9u86GgmdsO" currentUser={user?.id}  />
       </div>
     </div>
   );

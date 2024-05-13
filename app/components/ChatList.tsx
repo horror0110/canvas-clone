@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const ChatList = () => {
+const ChatList = ({ admin, currentUser }: any) => {
   const [chats, setChats] = useState([]);
 
   const { user } = useUser();
@@ -22,26 +22,42 @@ const ChatList = () => {
       .then((response) => response.json())
       .then((data) => setChats(data.data))
       .catch((err) => console.log(err));
-  }, [chats]);
+  }, [user]);
 
   return (
     <div className="max-h-[600px] overflow-y-scroll">
-      {chats.map((chat: any, index) => (
-        <div
-          key={index}
-          onClick={() => router.push(`/messenger/${chat.id}`)}
-          className="flex items-center gap-2 cursor-pointer hover:bg-gray-100"
-        >
-          <Image
-            src={chat.members[1].image}
-            alt="avatar"
-            width={50}
-            height={50}
-          />
-
-          <span>{chat.members[1].name}</span>
-        </div>
-      ))}
+      {chats.map((chat: any, index: number) => {
+        const isAdmin = currentUser === admin;
+        return !isAdmin ? (
+          <div
+            key={index}
+            onClick={() => router.push(`/messenger/${chat.id}`)}
+            className="flex items-center gap-2 cursor-pointer hover:bg-gray-100"
+          >
+            <Image
+              src={chat.members[1].image}
+              alt="avatar"
+              width={50}
+              height={50}
+            />
+            <span>{chat.members[1].name}</span>
+          </div>
+        ) : (
+          <div
+            key={index}
+            onClick={() => router.push(`/messenger/${chat.id}`)}
+            className="flex items-center gap-2 cursor-pointer hover:bg-gray-100"
+          >
+            <Image
+              src={chat.members[0].image}
+              alt="avatar"
+              width={50}
+              height={50}
+            />
+            <span>{chat.members[0].name}</span>
+          </div>
+        );
+      })}
     </div>
   );
 };
