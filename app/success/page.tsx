@@ -38,6 +38,8 @@ const SuccessPage = () => {
 
         const ids = cart && cart.map((item: any) => item.id);
 
+        console.log(ids)
+
         const body2 = {
           id: ids,
         };

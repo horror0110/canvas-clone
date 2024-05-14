@@ -110,7 +110,7 @@ model Family {
 model Course {
   id            String    @id @default(cuid()) @map("_id")
   createdAt     DateTime  @default(now())
-  ownerStudents String[]
+  ownerStudents Json[]
   chapters      Chapter[]
   title         String
   price         Int

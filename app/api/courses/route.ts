@@ -57,6 +57,8 @@ export const PUT = async (req: NextRequest) => {
 
     const { id } = await req.json();
 
+    console.log(id);
+
     const updatedCourse = await prisma.course.updateMany({
       where: {
         id: {
