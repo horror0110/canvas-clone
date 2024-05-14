@@ -6,7 +6,7 @@ export const POST = async (req: Request) => {
   try {
     const body = await req.json();
 
-    const student = await prisma.course.create({
+    const course = await prisma.course.create({
       data: { ...body },
     });
 
@@ -40,7 +40,7 @@ export const GET = async (req: Request) => {
     const courses: any = await prisma.course.findMany({
       orderBy: orderBy,
       include: {
-        videos: true,
+        chapters: true,
       },
     });
 

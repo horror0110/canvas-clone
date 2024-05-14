@@ -16,7 +16,8 @@ export default authMiddleware({
     "/api/messenger",
     "/api/chat",
     "/api/chat/:id",
-    "/api/checkchat"
+    "/api/checkchat",
+    "/api/chapter"
   ],
 });
 

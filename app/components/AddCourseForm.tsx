@@ -11,6 +11,7 @@ import { LuLoader2 } from "react-icons/lu";
 import { PiArticleMedium } from "react-icons/pi";
 import { useRouter } from "next/navigation";
 import { Toast } from "primereact/toast";
+import { Dialog } from "primereact/dialog";
 
 const AddCourseForm = () => {
   const [image, setImage] = useState("");
@@ -20,6 +21,8 @@ const AddCourseForm = () => {
   const [teacher, setTeacher] = useState("");
   const [price, setPrice] = useState("");
   const { setLoading, toast }: any = useContext(GlobalContext);
+
+
   const router = useRouter();
 
   const handleImageDelete = (image: string) => {
@@ -86,6 +89,7 @@ const AddCourseForm = () => {
         setLoading(false), console.log(err);
       });
   };
+
 
   return (
     <>
@@ -178,6 +182,8 @@ const AddCourseForm = () => {
               className="border border-gray-500 "
             />
           </div>
+
+       
 
           <div className="flex items-center justify-center  mx-auto my-10 text-center bg-mainColor text-white w-max p-2 rounded-md hover:bg-blue-500">
             <Button onClick={handleSave} label="Хадгалах" />

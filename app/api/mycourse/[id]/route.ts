@@ -13,6 +13,9 @@ export const GET = async (
         has: id,
       },
     },
+    include: {
+      chapters:true
+    }
   });
 
   return NextResponse.json({ data: courses });

@@ -108,14 +108,14 @@ model Family {
 }
 
 model Course {
-  id            String   @id @default(cuid()) @map("_id")
-  createdAt     DateTime @default(now())
+  id            String    @id @default(cuid()) @map("_id")
+  createdAt     DateTime  @default(now())
   ownerStudents String[]
+  chapters      Chapter[]
   title         String
   price         Int
   description   String
-  videos        Video[]
-  studentCount  Int      @default(0)
+  studentCount  Int       @default(0)
   videoCount    String?
   views         String?
   timeLength    String?
@@ -123,12 +123,23 @@ model Course {
   image         String
 }
 
+model Chapter {
+  id String @id @default(cuid()) @map("_id")
+
+  title String
+
+  Course   Course? @relation(fields: [courseId], references: [id])
+  courseId String?
+
+  videos Video[]
+}
+
 model Video {
-  id       String  @id @default(cuid()) @map("_id")
-  title    String
-  url      String
-  Course   Course? @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  courseId String
+  id        String   @id @default(cuid()) @map("_id")
+  title     String
+  url       String
+  Chapter   Chapter? @relation(fields: [chapterId], references: [id])
+  chapterId String?
 }
 
 model Order {

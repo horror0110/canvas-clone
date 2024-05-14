@@ -71,8 +71,13 @@ const MyCoursePage = ({ params }: any) => {
               <div className="flex items-center justify-between">
                 <span className="flex gap-1 items-center text-gray-500">
                   <IoBookOutline color="#008080" size={15} />
-                  10ш видео хичээл
+                  {course.chapters?.length} Chapters
                 </span>
+              </div>
+
+              <div>
+                <div className="bg-green-700 w-full h-2 rounded-md"></div>
+                <span className="text-green-700">100% complete</span>
               </div>
 
               <span className="font-bold text-md text-start ">
